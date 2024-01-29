@@ -1,6 +1,8 @@
 // app ka andr app yani ka express aka code rakhna ha 
 const express = require('express');
 
+const ErrorMiddleWare = require('./middleware/error');
+
 // importing product router   // router ko import kia hai
 // -------------------------------------------------------
 const productRoutesAll = require("./Routes/ProductsRoutes");  // router ko import kia hai
@@ -14,6 +16,11 @@ app.use(express.json());    // yani ka app express ka use kara ga or json ka use
 // Now using product router in app.js     calling api
 app.use("/api/ecommercev1",productRoutesAll)
 
+
+
+// -------------------------------------------------------
+// Error Handler Middleware
+app.use(ErrorMiddleWare);
 
 
 // Path: backend/app.js
