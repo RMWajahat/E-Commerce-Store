@@ -1,7 +1,7 @@
 // app ka andr app yani ka express aka code rakhna ha 
 const express = require('express');
 
-const ErrorMiddleWare = require('./middleware/error');
+const ErrorMiddleWare =require('./middleware/error');
 
 // importing product router   // router ko import kia hai
 // -------------------------------------------------------
