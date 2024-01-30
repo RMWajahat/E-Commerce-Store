@@ -5,7 +5,7 @@ module.exports =  (err, req, res, next) => {
 
 
     // Wrong Mongoose Object ID Error
-    if(err.name === 'CastError'){
+    if(err.name === 'CastError'){     // agar error ka name CastError hai toh    mtlb get product keta hua chawAL SI id bhaj dei tou yeh error aa skta hai toh uss ko deal krna ka lia hai 
         const message = `Resource not found. Invalid: ${err.path}`;
         err = new ErrorHandler(message, 400);
     }
