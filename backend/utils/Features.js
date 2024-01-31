@@ -1,6 +1,7 @@
 class Features{  //addng features to the query
     constructor(query,queryStr){        //query is the query object and queryStr is the query string 
-        this.query = query;        // hm krta tha mongodbobject.find({name: 'apple'});  toh yeh query hai
+        this.query = query;   // is ko keh skta hain k base function kya call ho rha mongoose sa   
+                             // hm krta tha mongodbobject.find({name: 'apple'});  toh yeh query hai
         this.queryStr = queryStr;       // 
     }
 

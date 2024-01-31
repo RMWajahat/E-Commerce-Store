@@ -25,7 +25,8 @@ exports.createProduct = createProduct;
 // get method for getting all products from database
 const getProducts = catchAsyncErrors(
     async (req, res) => {
-        const products = await Product.find();
+        const features = Features(Product.find(),req.query).search().filter();
+        const products = await features.query;
         res.status(200).json({
             success: true,
             products: products,
