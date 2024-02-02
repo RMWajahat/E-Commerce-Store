@@ -27,15 +27,16 @@ exports.createProduct = createProduct;
 const getProducts = catchAsyncErrors(
     async (req, res) => {
         const resultsPerPage = 4;
-        let features = new Features(Product.find(), req.query).search().filter().pagination(resultsPerPage);        // yeh line of code hai jo Features.js ka class call kara ga aur uss ka functions call kara ga
+        const productsCount = await Product.countDocuments();  // yeh line of code hai jo database se count kr k products ki total count nikal raha hai
+        let features = new Features(Product.find(), req.query).search().filter().pagination(resultsPerPage);         // yeh line of code hai jo Features.js ka class call kara ga aur uss ka functions call kara ga
         const products = await features.query;
         res.status(200).json({
             success: true,
             products: products,
+            productsCount: productsCount
         })
     }
 );
-
 exports.getProducts = getProducts;
 
 

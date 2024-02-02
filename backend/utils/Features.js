@@ -52,6 +52,7 @@ class Features {  //addng features to the query
 
         const skipProducts = perPageProducts * (currentPage - 1);   // agr page 1 hai tou 0 products skip kara ga agr page 2 hai tou 4 products skip kara ga
         this.query = this.query.limit(perPageProducts).skip(skipProducts);   // limit and skip are mongoose functions to limit the products and skip the products
+        return this;
     }
 
 
