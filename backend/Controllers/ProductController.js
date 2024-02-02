@@ -2,10 +2,11 @@ const Product = require('../Models/ProductModel');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/asyncErrors');
 const Features = require('../utils/Features');
+
+
+
+
 //             comment:{creating product from model and saving it in database
-
-
-
 // create product in database --------- This must be admin access only
 const createProduct = catchAsyncErrors(
     async (req, res) => {
