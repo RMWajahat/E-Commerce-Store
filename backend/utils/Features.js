@@ -14,8 +14,11 @@ class Features {  //addng features to the query
         } : {}
 
         this.query = this.query.find({ ...keyword });
+
         return this;
     }
+
+
 
 
     filter() {
@@ -42,6 +45,18 @@ class Features {  //addng features to the query
         this.query = this.query.find(JSON.parse(queryNew));     // ab jo string hai uss ko object mai convert krna ka lia hai
         return this;       // return krna ka lia hai ta ka chain mai chalta jae 
     }
+
+    pagination(pageNumber) {
+        const currentPage = Number(this.queryStr.page) || 1;   // agr koi page number nhi milta tou 1 set kr da ga
+        const perPageProducts = pageNumber;   //  products per page
+
+        const skipProducts = perPageProducts * (currentPage - 1);   // agr page 1 hai tou 0 products skip kara ga agr page 2 hai tou 4 products skip kara ga
+        this.query = this.query.limit(perPageProducts).skip(skipProducts);   // limit and skip are mongoose functions to limit the products and skip the products
+    }
+
+
+
+
 }
 
 

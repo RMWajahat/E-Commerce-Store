@@ -26,7 +26,8 @@ exports.createProduct = createProduct;
 // get method for getting all products from database
 const getProducts = catchAsyncErrors(
     async (req, res) => {
-        let features = new Features(Product.find(), req.query).search().filter();
+        const resultsPerPage = 4;
+        let features = new Features(Product.find(), req.query).search().filter().pagination(resultsPerPage);        // yeh line of code hai jo Features.js ka class call kara ga aur uss ka functions call kara ga
         const products = await features.query;
         res.status(200).json({
             success: true,
