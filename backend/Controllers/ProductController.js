@@ -19,7 +19,7 @@ const createProduct = catchAsyncErrors(
     }
 );
 
-exports.createProduct = createProduct;
+
 
 
 
@@ -38,7 +38,7 @@ const getProducts = catchAsyncErrors(
         })
     }
 );
-exports.getProducts = getProducts;
+
 
 
 
@@ -69,7 +69,7 @@ const updateProduct = catchAsyncErrors(
     }
 );
 
-exports.updateProduct = updateProduct;
+
 
 
 
@@ -99,7 +99,7 @@ const DeleteProduct = catchAsyncErrors(
     }
 );
 
-exports.DeleteProduct = DeleteProduct;
+
 
 
 
@@ -124,4 +124,13 @@ const getProductDetails = catchAsyncErrors(
 );
 
 
-exports.getProductDetails = getProductDetails;
+
+
+
+module.exports = {
+    DeleteProduct,
+    getProductDetails,
+    updateProduct,
+    getProducts,
+    createProduct
+}

@@ -3,12 +3,14 @@ const generateTokenFromid = require('../utils/generateToken');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/asyncErrors');
 
+const bcrypter = require('bcryptjs');
+
 
 const registerUser = catchAsyncErrors(
     async (req, res, next) => {
         const { name, email, password, role, createdAt } = req.body;
 
-        if (!name || !email || !password || !role || !createdAt) {
+        if (!name || !email || !password) {
             return next(new ErrorHandler("Please fill all the fields", 400));
         }
 
@@ -48,4 +50,35 @@ const registerUser = catchAsyncErrors(
 
 
 
-module.exports = registerUser;
+
+const loginUser = catchAsyncErrors(
+    async (req, res, next) => {
+
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return next(new ErrorHandler("Please enter email and password", 400));
+        }
+        const existingUser = await User.findOne({ email })
+        if (!existingUser) {
+            return next(new ErrorHandler("Invalid email or password", 401));
+        }
+
+        const user_password_hashed = await User.findOne({ email }).select("password");     // this return the object with password selected 
+
+        const is_validUser = await bcrypter.compare(password, user_password_hashed.password);
+        if (is_validUser) {
+            console.log("Password matched");
+        }
+        res.status(201).json({
+            success: true,
+            message: "login success"
+        })
+    }
+)
+
+
+module.exports = {
+    registerUser,
+    loginUser
+};
