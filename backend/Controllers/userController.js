@@ -11,7 +11,13 @@ const registerUser = catchAsyncErrors(
         if (!name || !email || !password) {
             return new ErrorHandler("Please enter all fields", 400);
         }
-        const usernew = await User.create({ name, email, password, createdAt }, (err, user) => {
+        const usernew = await User.create({
+            name, email, password, createdAt, avatar: {
+                public_id: "Some public id will be here from cloudinary",
+                url: "random url"
+
+            }
+        }, (err, user) => {
             if (err) {
                 return new ErrorHandler(err.message, 400);
             }
@@ -38,4 +44,4 @@ const registerUser = catchAsyncErrors(
 
 
 
-export default registerUser;
+module.exports = { registerUser };
