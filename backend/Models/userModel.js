@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bycrypter = require('bcryptjs');
+const validator = require('validator');
 
 
 const userSchema = new mongoose.Schema({
@@ -43,8 +44,8 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpire: Date,          // yeh token ki expiry date save kara ga so that user ko pata chalay k token expire ho gaya hai ya nahi
 });
 
-userSchema.pre('save', async () => {
-    this.password = await bycrypter.hash(this.password, 10);   // yeh password ko hash kara ga
+userSchema.pre('save', async function () {
+    this.password = await bycrypter.hash(this.password, 10);      // yeh password ko hash kara ga
 })
 
 

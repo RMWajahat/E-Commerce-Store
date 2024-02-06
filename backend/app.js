@@ -12,6 +12,11 @@ const user_routes = require("./Routes/userRoutes");
 
 
 
+
+const app = express();
+app.use(express.json());    // yani ka app express ka use kara ga or json ka use kara ga
+
+
 // initaializing usages 
 
 // cookie parser usage 
@@ -25,8 +30,6 @@ app.use(crossOriginSharing({
     credentials: true
 }));
 
-const app = express();
-app.use(express.json());    // yani ka app express ka use kara ga or json ka use kara ga
 
 // -------------------------------------------------------      Yahan scene ye ha k saray routes unka name ka bna ka phir unko app.use ma use kara ga   iss tra code app.js ma kmm ho jae ga 
 // Now using product router in app.js     calling api

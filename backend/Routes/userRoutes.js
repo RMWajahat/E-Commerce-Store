@@ -10,4 +10,4 @@ user_router.route('/register').post(registerUser);
 
 
 
-module.exports = { user_router };
+module.exports = user_router;
