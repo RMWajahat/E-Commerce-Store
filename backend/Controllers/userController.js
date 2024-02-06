@@ -68,12 +68,19 @@ const loginUser = catchAsyncErrors(
 
         const is_validUser = await bcrypter.compare(password, user_password_hashed.password);
         if (is_validUser) {
-            console.log("Password matched");
+            const token_for_user = generateTokenFromid(existingUser._id);
+            res.cookie('token', token_for_user, {
+                withCredentials: true,
+                httpOnly: false
+            });
+            return res.status(201).json({
+                success: true,
+                message: "User logged in successfully"
+            })
         }
-        res.status(201).json({
-            success: true,
-            message: "login success"
-        })
+
+        return next(new ErrorHandler("Access Denied", 401));
+
     }
 )
 
