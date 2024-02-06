@@ -44,7 +44,14 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpire: Date,          // yeh token ki expiry date save kara ga so that user ko pata chalay k token expire ho gaya hai ya nahi
 });
 
-userSchema.pre('save', async function () {
+userSchema.pre('save', async function (next) {
+
+    if (!this.isModified('password')) {
+        // yeh check kara ga k agar password change hua hai to hash kara ga
+
+        next();
+    }
+
     this.password = await bycrypter.hash(this.password, 10);      // yeh password ko hash kara ga
 })
 

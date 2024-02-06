@@ -6,8 +6,13 @@ const catchAsyncErrors = require('../middleware/asyncErrors');
 
 const registerUser = catchAsyncErrors(
     async (req, res, next) => {
-        const { name, email, password, createdAt } = req.body;
-        console.log("Name: " + name + " Email: " + email + " Password: " + password);
+        const { name, email, password, role, createdAt } = req.body;
+
+        if (!name || !email || !password || !role || !createdAt) {
+            return next(new ErrorHandler("Please fill all the fields", 400));
+        }
+
+
         const Is_user_exist = await User.findOne({ email });
         if (Is_user_exist) {
             return next(new ErrorHandler("User already exists", 400));
@@ -17,11 +22,11 @@ const registerUser = catchAsyncErrors(
                 public_id: "Some public id will be here from cloudinary",
                 url: "random url"
 
-            }, createdAt
+            }, role, createdAt
         }
         );
 
-        console.log("User created successfully");
+        // console.log("User created successfully");
 
         const token_for_user = generateTokenFromid(usernew._id);
         res.cookie('token', token_for_user, {
@@ -30,7 +35,7 @@ const registerUser = catchAsyncErrors(
         });
 
 
-        console.log("cookie set successfully");
+        // console.log("cookie set successfully");
 
 
         res.status(200).json({
