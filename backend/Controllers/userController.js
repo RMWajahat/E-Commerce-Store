@@ -1,7 +1,7 @@
 const User = require('../Models/userModel');
-const generateTokenFromid = require('../utils/generateToken');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/asyncErrors');
+const sendTokenResponse = require('../utils/responseWithToken');
 
 const bcrypter = require('bcryptjs');
 
@@ -30,20 +30,7 @@ const registerUser = catchAsyncErrors(
 
         // console.log("User created successfully");
 
-        const token_for_user = generateTokenFromid(usernew._id);
-        res.cookie('token', token_for_user, {
-            withCredentials: true,
-            httpOnly: false
-        });
-
-
-        // console.log("cookie set successfully");
-
-
-        res.status(200).json({
-            message: "User created successfully",
-            success: true,
-        });
+        sendTokenResponse(usernew, 201, "User Registered successfully", res);
 
 
     })
@@ -64,22 +51,14 @@ const loginUser = catchAsyncErrors(
             return next(new ErrorHandler("Invalid email or password", 401));
         }
 
-        const user_password_hashed = await User.findOne({ email }).select("password");     // this return the object with password selected 
+        const user_password_hashed = await User.findOne({ email }).select("+password");     // this return the object with password selected 
 
         const is_validUser = await bcrypter.compare(password, user_password_hashed.password);
         if (is_validUser) {
-            const token_for_user = generateTokenFromid(existingUser._id);
-            res.cookie('token', token_for_user, {
-                withCredentials: true,
-                httpOnly: false
-            });
-            return res.status(201).json({
-                success: true,
-                message: "User logged in successfully"
-            })
+            sendTokenResponse(existingUser, 200, "User Logged in successfully", res);
         }
 
-        return next(new ErrorHandler("Access Denied", 401));
+        return next(new ErrorHandler("Un-Authorized Access", 401));
 
     }
 )

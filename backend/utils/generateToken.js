@@ -7,4 +7,4 @@ const generateTokenFromid = (user_id) => {
 }
 
 
-module.exports = generateTokenFromid;
+module.exports = { generateTokenFromid };
