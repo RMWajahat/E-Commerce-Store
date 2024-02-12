@@ -64,7 +64,29 @@ const loginUser = catchAsyncErrors(
 )
 
 
+
+const logoutUser = catchAsyncErrors(
+    async (req, res, next) => {
+
+        const { token } = req.cookies;
+        if (!token) {
+            return next(new ErrorHandler("No user is logged in", 400));
+        }
+
+        res.cookie("token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true
+        })
+        res.status(200).json({
+            success: true,
+            message: "User Logged out successfully"
+        })
+    }
+)
+
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 };
