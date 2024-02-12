@@ -4,6 +4,7 @@ const catchAsyncErrors = require('../middleware/asyncErrors');
 const sendTokenResponse = require('../utils/responseWithToken');
 
 const bcrypter = require('bcryptjs');
+const sendEmail = require('../utils/sendEmail');
 
 
 const registerUser = catchAsyncErrors(
@@ -84,9 +85,46 @@ const logoutUser = catchAsyncErrors(
     }
 )
 
+const forgetPassword = catchAsyncErrors(
+    async (req, res, next) => {
+
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return next(new ErrorHandler("User not found with this email", 404));
+        }
+        const resetToken = user.GenerateResetPasswordToken();
+
+        await user.save({ validateBeforeSave: false });
+        const resetLink = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
+        const email_message = `Follow link to reset your password. \n\n${resetLink}\n\nIf you have not requested this email then please ignore it`;
+        try {
+            
+            await sendEmail({
+                email: user.email,
+                subject: "Ecommerce Password Recovery",
+                message: email_message
+            });
+            res.status(200).json({
+                success: true,
+                message: `Email sent to ${user.email} successfully. Please check your email`
+            })
+        } catch (error) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return next(new ErrorHandler("Email could not be sent", 500));
+
+        }
+    }
+)
+
+
+
+
 
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    forgetPassword
 };

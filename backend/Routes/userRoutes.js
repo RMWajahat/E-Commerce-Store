@@ -1,4 +1,4 @@
-const { registerUser, loginUser, logoutUser } = require('../Controllers/userController');
+const { registerUser, loginUser, logoutUser, forgetPassword } = require('../Controllers/userController');
 
 const express = require('express');
 const user_router = express.Router();
@@ -7,6 +7,7 @@ const user_router = express.Router();
 user_router.route('/register').post(registerUser);
 user_router.route('/login').post(loginUser);
 user_router.route('/logout').get(logoutUser)
+user_router.route('/resetpassword').post(forgetPassword)
 
 
 

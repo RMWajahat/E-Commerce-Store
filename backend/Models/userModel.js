@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bycrypter = require('bcryptjs');
 const validator = require('validator');
-
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -54,6 +54,15 @@ userSchema.pre('save', async function (next) {
     this.password = await bycrypter.hash(this.password, 10);      // yeh password ko hash kara ga
 })
 
+// reset password token method 
+userSchema.methods.GenerateResetPasswordToken = function () {
+    const resetToken = crypto.randomBytes(18).toString('hex');  // yeh token generate kara ga 
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');  // yeh token ko hash kara ga 
+
+    this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;  // yeh token ki expiry date set kara ga 10 minutes k baad expire ho jaye ga
+
+    return resetToken;  // yeh token ko return kara ga 
+}
 
 
 module.exports = mongoose.model('User', userSchema);  // yeh model ko export kara ga jis ko hum use kara ga
