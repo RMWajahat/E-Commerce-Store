@@ -5,6 +5,7 @@ const sendTokenResponse = require('../utils/responseWithToken');
 
 const bcrypter = require('bcryptjs');
 const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
 
 
 const registerUser = catchAsyncErrors(
@@ -98,7 +99,7 @@ const forgetPassword = catchAsyncErrors(
         const resetLink = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
         const email_message = `Follow link to reset your password. \n\n${resetLink}\n\nIf you have not requested this email then please ignore it`;
         try {
-            
+
             await sendEmail({
                 email: user.email,
                 subject: "Ecommerce Password Recovery",
@@ -120,11 +121,39 @@ const forgetPassword = catchAsyncErrors(
 
 
 
+// reset password
+const resetPassword = catchAsyncErrors(
+    async (req, res, next) => {
+
+        const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");       // url ma sa token uthain ga q k forgot password sa url ma token bhaja tha 
+        const user = await User.findOne({                 // agr uss token sa user mil jata ha to uska password reset ho jaye ga
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now() }       // ye dekha ga k ziada time toh nahi ho gya token ko expire hona ma
+        }); // $gt is greater than
+
+        if (!user) {
+            return next(new ErrorHandler("Password reset token is invalid or has been expired", 400));
+        }
+
+        if (req.body.password !== req.body.confirmPassword) {
+            return next(new ErrorHandler("Password does not match", 400));
+        }
+        user.password = req.body.password;                                                              // ab user ka password change ho jaye ga    jo body ma pass tha wo schema ma challa gya ha
+        user.resetPasswordToken = undefined;                                    // qk password change ho gya ha to token expire ho jaye ga
+        user.resetPasswordExpire = undefined;                                   // token ka kaam khatam tou expire b kr dia ha
+        user.save();                                                                              // kaam kr ka save kr dia ha object ko
+        sendTokenResponse(user, 200, "Password reset successfully", res);       // database ma sb save ho gya ha ab user ko token bhej dia ha
+        // mtlb user ko kya pta k uska password change ho gya ha       tou iss lia response bhaj dein ga q k uss ka function bnaya hua iss lia aisa kya wrna res.status(200).json({success: true, message: "Password reset successfully"}) b likh sktay thay
+    })
+
+
+
 
 
 module.exports = {
     registerUser,
     loginUser,
     logoutUser,
-    forgetPassword
+    forgetPassword,
+    resetPassword
 };
