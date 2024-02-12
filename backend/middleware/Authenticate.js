@@ -18,4 +18,18 @@ const AuthenticateUser = catchAsyncErrors(async (req, res, next) => {
     next(); // next call krain ga jo next middleware hai uss ka
 });
 
-module.exports = AuthenticateUser;
+
+
+const isUserAdmin = (role) => {
+    return (req, res, next) => {
+        if ((req.user.role.toLowerCase()) !== (role.toLowerCase())) {    // q k hm na req mein user ki info save ki hui hai   aur scheam ma user ka role b define hai So udr sa pta chal jana k admin hai k nahin 
+            return next(new ErrorHandler(`Role ${req.user.role} is not authorized to access this resource`, 403));
+        }
+        next();
+    }
+}
+
+module.exports = {
+    AuthenticateUser,
+    isUserAdmin
+};

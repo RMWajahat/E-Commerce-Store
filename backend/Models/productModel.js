@@ -48,22 +48,27 @@ const productSchema = mongoose.Schema({  // Schema is a class in mongoose     me
         type: Number,
         default: 0
     },
-    reviews:[
+    reviews: [
         {
-            name:{
-                type:String,
-                required:true
+            name: {
+                type: String,
+                required: true
             },
-            rating:{
-                type:Number,
-                required:true
+            rating: {
+                type: Number,
+                required: true
             },
-            comment:{
-                type:String,
-                required:true
+            comment: {
+                type: String,
+                required: true
             }
         }
     ],
+    creator: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+    },
     createdAt: {
         type: Date,
         default: Date.now   // Date.now is a function which returns current date and time

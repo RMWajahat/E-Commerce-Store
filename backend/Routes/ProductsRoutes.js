@@ -1,16 +1,16 @@
 // importing modules to use in this file
 const express = require("express");
 const { getProducts, createProduct, updateProduct, DeleteProduct, getProductDetails } = require("../Controllers/ProductController");
-const AuthenticateUser = require("../middleware/Authenticate");
+const { AuthenticateUser, isUserAdmin } = require("../middleware/Authenticate");
 
 // -------------------------------------------------------
 // Router Creation 
 const router = express.Router();  // router ka object bana lia    ab routes bna skta hain
 
-router.route("/products").get(AuthenticateUser, getProducts);  // router.route("/api/ecommercev1/products").get(getProducts);  // router ka object bana lia    ab routes bna skta hain
+router.route("/products").get(getProducts);  // router.route("/api/ecommercev1/products").get(getProducts);  // router ka object bana lia    ab routes bna skta hain
 
-router.route("/products/new").post(AuthenticateUser, createProduct);  // router.route("/api/ecommercev1/products/:id").post(createProduct);  // mtlb jb iss url pr post request aii gi tou createProduct function chalay ga
-router.route("/products/:id").put(AuthenticateUser, updateProduct).delete(AuthenticateUser, DeleteProduct).get(getProductDetails);  // router.route("/api/ecommercev1/products/:id").put(updateProduct).delete(DeleteProduct);  // mtlb jb iss url pr put request aii gi tou updateProduct function chalay ga
+router.route("/products/new").post(AuthenticateUser, isUserAdmin("admin"), createProduct);  // router.route("/api/ecommercev1/products/:id").post(createProduct);  // mtlb jb iss url pr post request aii gi tou createProduct function chalay ga
+router.route("/products/:id").put(AuthenticateUser, isUserAdmin("admin"), updateProduct).delete(AuthenticateUser, isUserAdmin("admin"), DeleteProduct).get(getProductDetails);  // router.route("/api/ecommercev1/products/:id").put(updateProduct).delete(DeleteProduct);  // mtlb jb iss url pr put request aii gi tou updateProduct function chalay ga
 
 
 

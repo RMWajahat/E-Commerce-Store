@@ -9,7 +9,10 @@ const Features = require('../utils/Features');
 //             comment:{creating product from model and saving it in database
 // create product in database --------- This must be admin access only
 const createProduct = catchAsyncErrors(
-    async (req, res) => {
+    async (req, res, next) => {
+
+        req.body.creator = req.user.id;
+
         const createProduct = await Product.create(req.body);
 
         res.status(201).json({
@@ -28,6 +31,8 @@ const createProduct = catchAsyncErrors(
 const getProducts = catchAsyncErrors(
     async (req, res) => {
         const resultsPerPage = 4;
+
+        // Product.find().populate("creator")                           we can also use this ----- this will replace user id with the whole user object whie fetching                                       mtlb product response ka sath user ka kala chitta khol ka samna bhaj de ga  
         const productsCount = await Product.countDocuments();  // yeh line of code hai jo database se count kr k products ki total count nikal raha hai
         let features = new Features(Product.find(), req.query).search().filter().pagination(resultsPerPage);         // yeh line of code hai jo Features.js ka class call kara ga aur uss ka functions call kara ga
         const products = await features.query;
