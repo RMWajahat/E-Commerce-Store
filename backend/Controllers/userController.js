@@ -107,7 +107,7 @@ const forgetPassword = catchAsyncErrors(
             });
             res.status(200).json({
                 success: true,
-                message: `Email sent to ${user.email} successfully. Please check your email`
+                message: `Email sent to ${user.email} successfully.\n Please check your email`
             })
         } catch (error) {
             user.resetPasswordToken = undefined;
@@ -139,9 +139,9 @@ const resetPassword = catchAsyncErrors(
             return next(new ErrorHandler("Password does not match", 400));
         }
         user.password = req.body.password;                                                              // ab user ka password change ho jaye ga    jo body ma pass tha wo schema ma challa gya ha
-        user.resetPasswordToken = undefined;                                    // qk password change ho gya ha to token expire ho jaye ga
-        user.resetPasswordExpire = undefined;                                   // token ka kaam khatam tou expire b kr dia ha
-        user.save();                                                                              // kaam kr ka save kr dia ha object ko
+        user.resetPasswordToken = undefined;                                                          // qk password change ho gya ha to token expire ho jaye ga
+        user.resetPasswordExpire = undefined;                                                         // token ka kaam khatam tou expire b kr dia ha
+        user.save();                                                                                                    // kaam kr ka save kr dia ha object ko
         sendTokenResponse(user, 200, "Password reset successfully", res);       // database ma sb save ho gya ha ab user ko token bhej dia ha
         // mtlb user ko kya pta k uska password change ho gya ha       tou iss lia response bhaj dein ga q k uss ka function bnaya hua iss lia aisa kya wrna res.status(200).json({success: true, message: "Password reset successfully"}) b likh sktay thay
     })
