@@ -75,10 +75,15 @@ const logoutUser = catchAsyncErrors(
             return next(new ErrorHandler("No user is logged in", 400));
         }
 
-        res.cookie("token", null, {
-            expires: new Date(Date.now()),
-            httpOnly: true
-        })
+        console.log(`User Logged out ${req.user}`);
+
+
+        // res.cookie("token", null, {
+        //     expires: new Date(Date.now()),
+        //     httpOnly: true
+        // })
+        res.clearCookie("token");
+        console.log(`User Logged out ${req.user}`);
         res.status(200).json({
             success: true,
             message: "User Logged out successfully"
@@ -147,6 +152,32 @@ const resetPassword = catchAsyncErrors(
     })
 
 
+// get user details 
+const getUserDetails = catchAsyncErrors(
+    async (req, res, next) => {
+        const user = await User.findById(req.user.id);                              // req.user.id is coming from Authenticate.js      mtlb jo user login ha uska id ha jisa hm na token bna k bheja tha aur req ka andr save kia tha
+        res.status(200).json({
+            success: true,
+            user
+        })
+    });
+
+// update password
+const updatePassword = catchAsyncErrors(
+    async (req, res, next) => {
+        const user = await User.findById(req.user.id).select("+password");      // user ka password select kr rha ha q k user ka password select nahi ho rha tha
+        const isMatch = await bcrypter.compare(req.body.oldPassword, user.password);      // user ka password match ho rha ha ya nahi
+        if (!isMatch) {
+            return next(new ErrorHandler("Old password is incorrect", 400));
+        }
+        if (req.body.password !== req.body.confirmPassword) {
+            return next(new ErrorHandler("Password does not match", 400));
+        }
+        user.password = req.body.password;              // user ka password change ho jaye ga
+        await user.save();                                          // save kr dia ha
+        sendTokenResponse(user, 200, "Password updated successfully", res);       // user ko token bhej dia ha
+    }// user ko kya pta k uska password change ho gya ha       tou iss lia response bhaj dein ga q k uss ka function bnaya hua iss lia aisa kya wrna res.status(200).json({success: true, message: "Password reset successfully"}) b likh sktay thay
+)
 
 
 
@@ -155,5 +186,7 @@ module.exports = {
     loginUser,
     logoutUser,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    getUserDetails,
+    updatePassword
 };
