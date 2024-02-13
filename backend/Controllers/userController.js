@@ -57,8 +57,10 @@ const loginUser = catchAsyncErrors(
 
         const is_validUser = await bcrypter.compare(password, user_password_hashed.password);
         if (is_validUser) {
-            sendTokenResponse(existingUser, 200, "User Logged in successfully", res);
+            return sendTokenResponse(existingUser, 200, "User Logged in successfully", res);
         }
+        console.log("if this is printed then there is a bug ");
+
 
         return next(new ErrorHandler("Un-Authorized Access", 401));
 
@@ -75,7 +77,6 @@ const logoutUser = catchAsyncErrors(
             return next(new ErrorHandler("No user is logged in", 400));
         }
 
-        console.log(`User Logged out ${req.user}`);
 
 
         // res.cookie("token", null, {
@@ -83,7 +84,6 @@ const logoutUser = catchAsyncErrors(
         //     httpOnly: true
         // })
         res.clearCookie("token");
-        console.log(`User Logged out ${req.user}`);
         res.status(200).json({
             success: true,
             message: "User Logged out successfully"
