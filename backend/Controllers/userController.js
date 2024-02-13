@@ -2,9 +2,9 @@ const User = require('../Models/userModel');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/asyncErrors');
 const sendTokenResponse = require('../utils/responseWithToken');
+const sendEmail = require('../utils/sendEmail');
 
 const bcrypter = require('bcryptjs');
-const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 
 
