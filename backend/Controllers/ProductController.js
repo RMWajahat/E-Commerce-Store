@@ -132,6 +132,8 @@ const getProductDetails = catchAsyncErrors(
 
 
 
+
+
 module.exports = {
     DeleteProduct,
     getProductDetails,

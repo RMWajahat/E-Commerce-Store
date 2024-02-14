@@ -181,6 +181,77 @@ const updatePassword = catchAsyncErrors(
 
 
 
+const updateProfile = catchAsyncErrors(
+    async (req, res, next) => {
+        const newUserData = {
+            name: req.body.name,
+            email: req.body.email
+        };
+        await User.findByIdAndUpdate(req.user.id, newUserData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+
+        res.status(200).json({
+            success: true
+        })
+    }
+)
+
+
+
+
+// admin access only
+const getAllUsers = catchAsyncErrors(
+    async (req, res, next) => {
+        const users = await User.find();
+        res.status(200).json({
+            success: true,
+            users: users
+        })
+    }
+);
+
+// get user by id  admin access only
+const getSinglelUser = catchAsyncErrors(
+    async (req, res, next) => {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return next(new ErrorHandler(`User does not found with id: ${req.params.id}`, 404));
+        }
+        res.status(200).json({
+            success: true,
+            users: user
+        })
+    }
+);
+
+
+// admin routes for user update and delete
+const updateProfile_admincall = catchAsyncErrors(
+    async (req, res, next) => {
+        const newUserData = {
+            name: req.body.name,
+            email: req.body.email,
+            role: req.body.role
+        };
+        const existingUser = await User.findByIdAndUpdate(req.params.id, newUserData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+        if (!existingUser) {
+            return next(new ErrorHandler(`User does not found with id: ${req.params.id}`, 404));
+        }
+
+        res.status(200).json({
+            success: true
+        })
+    }
+)
+
+
 module.exports = {
     registerUser,
     loginUser,
@@ -188,5 +259,9 @@ module.exports = {
     forgetPassword,
     resetPassword,
     getUserDetails,
-    updatePassword
+    updatePassword,
+    updateProfile,
+    getAllUsers,
+    getSinglelUser,
+    updateProfile_admincall
 };
