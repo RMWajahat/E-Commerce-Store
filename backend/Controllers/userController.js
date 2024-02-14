@@ -246,7 +246,24 @@ const updateProfile_admincall = catchAsyncErrors(
         }
 
         res.status(200).json({
-            success: true
+            success: true,
+            message: `User ${existingUser.name}'s credentials updated successfully`
+        })
+    }
+)
+
+
+
+const deleteUser_admincall = catchAsyncErrors(
+    async (req, res, next) => {
+        const existingUser = await User.findById(req.params.id);
+        if (!existingUser) {
+            return next(new ErrorHandler(`User does not found with id: ${req.params.id}`, 404));
+        }
+        await existingUser.deleteOne();
+        res.status(200).json({
+            success: true,
+            message: `User ${existingUser.name} deleted successfully`
         })
     }
 )
@@ -263,5 +280,6 @@ module.exports = {
     updateProfile,
     getAllUsers,
     getSinglelUser,
-    updateProfile_admincall
+    updateProfile_admincall,
+    deleteUser_admincall
 };

@@ -129,7 +129,47 @@ const getProductDetails = catchAsyncErrors(
 );
 
 
+// review Product 
 
+const reviewProduct = catchAsyncErrors(
+    async (req, res, next) => {
+        const { rating, comment, productId } = req.body;
+        const newReview = {
+            user: req.user._id,
+            name: req.user.name,
+            rating: Number(rating),
+            comment
+        }
+        let existing_product = await Product.findById(productId);
+        if (!existing_product) {
+            return next(new ErrorHandler("Product not found", 404));
+        }
+        let isReviewed = existing_product.reviews.find(
+            (review) => review.user.toString() === req.user._id.toString()
+            // review.user q k review ka user id aik object id hai aur req.user._id aik string hai to hm ne dono ko string me convert kr k compare kia hai
+        );
+        if (isReviewed) {
+            existing_product.reviews.forEach(review => {
+                if (review.user.toString() === req.user._id.toString()) {
+                    review.comment = comment;
+                    review.rating = rating;
+                }
+            });
+        } else {
+            existing_product.reviews.push(newReview);
+            existing_product.numberOfReviews = existing_product.reviews.length;
+        }
+        let avg = 0;
+        // taking rating average 
+        existing_product.ratings = (existing_product.reviews.map(item => (avg += item.rating))) / existing_product.reviews.length;
+        // yeh line of code hai jo rating ka average nikal raha hai
+        await existing_product.save({ validateBeforeSave: false });
+        res.status(200).json({
+            success: true,
+            message: "Review added successfully"
+        })
+
+    })
 
 
 
@@ -139,5 +179,6 @@ module.exports = {
     getProductDetails,
     updateProduct,
     getProducts,
-    createProduct
+    createProduct,
+    reviewProduct
 }

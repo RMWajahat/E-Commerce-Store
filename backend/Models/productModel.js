@@ -50,6 +50,11 @@ const productSchema = mongoose.Schema({  // Schema is a class in mongoose     me
     },
     reviews: [
         {
+            user: {
+                type: mongoose.Schema.ObjectId,
+                ref: "User",
+                required: true,
+            },
             name: {
                 type: String,
                 required: true

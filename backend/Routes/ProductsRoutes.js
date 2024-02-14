@@ -1,6 +1,6 @@
 // importing modules to use in this file
 const express = require("express");
-const { getProducts, createProduct, updateProduct, DeleteProduct, getProductDetails } = require("../Controllers/ProductController");
+const { getProducts, createProduct, updateProduct, DeleteProduct, getProductDetails, reviewProduct } = require("../Controllers/ProductController");
 const { AuthenticateUser, isUserAdmin } = require("../middleware/Authenticate");
 
 // -------------------------------------------------------
@@ -12,6 +12,9 @@ router.route("/products/:id").get(getProductDetails);  // router.route("/api/eco
 
 router.route("/admin/products/new").post(AuthenticateUser, isUserAdmin("admin"), createProduct);  // router.route("/api/ecommercev1/products/:id").post(createProduct);  // mtlb jb iss url pr post request aii gi tou createProduct function chalay ga
 router.route("/admin/products/:id").put(AuthenticateUser, isUserAdmin("admin"), updateProduct).delete(AuthenticateUser, isUserAdmin("admin"), DeleteProduct);  // router.route("/api/ecommercev1/products/:id").put(updateProduct).delete(DeleteProduct);  // mtlb jb iss url pr put request aii gi tou updateProduct function chalay ga
+
+// reviews part `
+router.route("/product/review").post(AuthenticateUser, reviewProduct);  // router.route("/api/ecommercev1/reviews").post(createReview);  // mtlb jb iss url pr post request aii gi tou createReview function chalay ga
 
 // -------------------------------------------------------
 // Exporting Router
