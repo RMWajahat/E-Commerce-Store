@@ -9,6 +9,7 @@ const ErrorMiddleWare = require('./middleware/error');
 // -------------------------------------------------------
 const productRoutesAll = require("./Routes/ProductsRoutes");  // router ko import kia hai
 const user_routes = require("./Routes/userRoutes");
+const orderRoutes = require("./Routes/OrderRoutes");
 
 
 
@@ -34,6 +35,7 @@ app.use(crossOriginSharing({
 // -------------------------------------------------------      Yahan scene ye ha k saray routes unka name ka bna ka phir unko app.use ma use kara ga   iss tra code app.js ma kmm ho jae ga 
 // Now using product router in app.js     calling api
 app.use("/api/ecommercev1", productRoutesAll)
+app.use("/api/ecommercev1", orderRoutes)
 app.use("/auth", user_routes)
 
 

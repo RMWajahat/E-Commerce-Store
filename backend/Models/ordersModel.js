@@ -96,9 +96,11 @@ const orderSchema = new mongoose.Schema({
         default: 'Processing...'
     },
     deliveredAt: {
-        type: Date
+        type: Date,
+        required: true,
+        default: Date.now
     },
-    caretedAt: {
+    createdAt: {
         type: Date,
         required: true,
         default: Date.now
@@ -110,4 +112,4 @@ const orderSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Orders', orderSchema)
+module.exports = mongoose.model('Order', orderSchema)
