@@ -161,7 +161,8 @@ const reviewProduct = catchAsyncErrors(
         }
         let avg = 0;
         // taking rating average 
-        existing_product.ratings = (existing_product.reviews.map(item => (avg += item.rating))) / existing_product.reviews.length;
+        existing_product.reviews.map((item) => (avg += item.rating))
+        existing_product.ratings = avg / existing_product.reviews.length;
         // yeh line of code hai jo rating ka average nikal raha hai
         await existing_product.save({ validateBeforeSave: false });
         res.status(200).json({
@@ -172,6 +173,46 @@ const reviewProduct = catchAsyncErrors(
     })
 
 
+// get all product reviews
+const getAllProductReviews = catchAsyncErrors(
+    async (req, res, next) => {
+        const product = await Product.findById(req.query.productid);
+        if (!product) {
+            return next(new ErrorHandler("Product not found", 404));
+        }
+        res.status(200).json({
+            success: true,
+            reviews: product.reviews
+        })
+    })
+
+// delete product reveiw by id
+const deleteReview = catchAsyncErrors(
+    async (req, res, next) => {
+        const product = await Product.findById(req.query.productid);
+        if (!product) {
+            return next(new ErrorHandler("Product not found", 404));
+        }
+        const reviews = product.reviews.filter(review => review._id.toString() !== req.query.reviewid.toString());
+        if (JSON.stringify(reviews) === JSON.stringify(product.reviews)) {
+            return next(new ErrorHandler("Review not found", 404));
+        }
+        let avg = 0;
+        // taking rating average
+        reviews.map((item) => (avg += item.rating))
+        product.ratings = avg / reviews.length;
+
+        product.reviews = reviews;
+        product.numberOfReviews = reviews.length;
+        await product.save({ validateBeforeSave: false });
+        res.status(200).json({
+            success: true,
+            message: "Review deleted successfully"
+        })
+    }
+)
+
+
 
 
 module.exports = {
@@ -180,5 +221,7 @@ module.exports = {
     updateProduct,
     getProducts,
     createProduct,
-    reviewProduct
+    reviewProduct,
+    getAllProductReviews,
+    deleteReview
 }
