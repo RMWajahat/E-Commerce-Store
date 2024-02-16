@@ -45,8 +45,13 @@ const getAllOrders = catchAsyncErrors(
         if (!orders) {
             return next(new ErrorHandler('No orders found', 404))
         }
+        let totalAmount = 0;
+        orders.forEach(order => {
+            totalAmount += Number(order.totalPrice)
+        })
         res.status(200).json({
             success: true,
+            total: totalAmount,
             Orders: orders
         })
     }
@@ -68,10 +73,57 @@ const getSingleOrder = catchAsyncErrors(
     }
 )
 
+// get order details - all users orders for a user
+const getMyOrders = catchAsyncErrors(
+    async (req, res, next) => {
+        console.log("hello world");
+        const orderlist = await Order.find({ user: req.user._id });
+
+        if (!orderlist) {
+            return next(new ErrorHandler(`Your have an empty cart.`, 404));
+        }
+        res.status(200).json({
+            success: true,
+            OrderList: orderlist
+        })
+    }
+)
+
+// update order details - one order for a user
+const updateOrderStatus = catchAsyncErrors(
+    async (req, res, next) => {
+        const existingOrder = await Order.findById(req.params.id);
+        if (!existingOrder) {
+            return next(new ErrorHandler(`Requested order can't be found`, 404))
+        }
+        const { orderStatus } = req.body;
+        if (existingOrder.orderStatus === "Delivered") {
+            return next(new ErrorHandler(`Order has been delivered already`, 400))
+        }
+        const updatedOrder = await Order.findByIdAndUpdate(req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            }
+        )
+        if (!updatedOrder) {
+            return next(new ErrorHandler(`Order not updated`, 404))
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Order updated successfully',
+        })
+    }
+)
+
 
 
 module.exports = {
     createOrder,
     getAllOrders,
-    getSingleOrder
+    getSingleOrder,
+    updateOrderStatus,
+    getMyOrders
 }
