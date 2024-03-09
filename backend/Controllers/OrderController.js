@@ -43,7 +43,7 @@ const getAllOrders = catchAsyncErrors(
     async (req, res, next) => {
         const orders = await Order.find();
         if (!orders) {
-            return next(new ErrorHandler('No orders found', 404))
+            return next(new ErrorHandler('No orders found', 404));
         }
         let totalAmount = 0;
         orders.forEach(order => {
@@ -68,7 +68,7 @@ const getSingleOrder = catchAsyncErrors(
         }
         res.status(200).json({
             success: true,
-            Order: order
+            orders: order
         })
     }
 )
@@ -76,7 +76,6 @@ const getSingleOrder = catchAsyncErrors(
 // get order details - all users orders for a user
 const getMyOrders = catchAsyncErrors(
     async (req, res, next) => {
-        console.log("hello world");
         const orderlist = await Order.find({ user: req.user._id });
 
         if (!orderlist) {
@@ -100,20 +99,40 @@ const updateOrderStatus = catchAsyncErrors(
         if (existingOrder.orderStatus === "Delivered") {
             return next(new ErrorHandler(`Order has been delivered already`, 400))
         }
-        const updatedOrder = await Order.findByIdAndUpdate(req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true,
-                useFindAndModify: false
-            }
-        )
-        if (!updatedOrder) {
-            return next(new ErrorHandler(`Order not updated`, 404))
-        }
+
+        existingOrder.orderItems.forEach(async (order) => {
+            await updateStock(order.product, order.qty);
+        })
+        existingOrder.orderStatus = req.body.orderStatus;
         res.status(200).json({
             success: true,
             message: 'Order updated successfully',
+        })
+    }
+)
+
+
+async function updateStock(id, qty) {
+    const product = await Product.findById(id);
+    product.stock = product.stock - qty;
+    await product.save({ validateBeforeSave: false });
+}
+
+
+
+
+
+// delete order - only for admin
+const delete_Order = catchAsyncErrors(
+    async (req, res, next) => {
+        const order = await Order.findById(req.params.orderid);
+        if (!order) {
+            return next(new ErrorHandler(`Requested order can't be found`, 404))
+        }
+        await order.remove();
+        res.status(200).json({
+            success: true,
+            message: 'Order deleted successfully',
         })
     }
 )
@@ -125,5 +144,6 @@ module.exports = {
     getAllOrders,
     getSingleOrder,
     updateOrderStatus,
-    getMyOrders
+    getMyOrders,
+    delete_Order
 }
