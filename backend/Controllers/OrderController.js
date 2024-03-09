@@ -1,4 +1,5 @@
 const Order = require('../Models/ordersModel');
+const Product = require('../Models/ProductModel');              // yeh line of code hai jo product model ko import kar raha hai
 const catchAsyncErrors = require("../Middleware/asyncErrors");
 const ErrorHandler = require("../Utils/errorHandler");
 
@@ -93,17 +94,20 @@ const updateOrderStatus = catchAsyncErrors(
     async (req, res, next) => {
         const existingOrder = await Order.findById(req.params.id);
         if (!existingOrder) {
-            return next(new ErrorHandler(`Requested order can't be found`, 404))
+            return next(new ErrorHandler(`Requested order can't be found`, 404));
         }
-        const { orderStatus } = req.body;
         if (existingOrder.orderStatus === "Delivered") {
-            return next(new ErrorHandler(`Order has been delivered already`, 400))
+            return next(new ErrorHandler(`Order has been delivered already`, 400));
         }
 
         existingOrder.orderItems.forEach(async (order) => {
-            await updateStock(order.product, order.qty);
+            await updateStock(order.product, order.qty, next);
         })
         existingOrder.orderStatus = req.body.orderStatus;
+        if (req.body.orderStatus === 'Delivered') {
+            existingOrder.deliveredAt = Date.now();
+        }
+        existingOrder.save({ validateBeforeSave: false });
         res.status(200).json({
             success: true,
             message: 'Order updated successfully',
@@ -112,9 +116,12 @@ const updateOrderStatus = catchAsyncErrors(
 )
 
 
-async function updateStock(id, qty) {
+async function updateStock(id, qty, next) {
     const product = await Product.findById(id);
-    product.stock = product.stock - qty;
+    if (!product) {
+        return next(new ErrorHandler(`Product not found`, 404))
+    }
+    product.Stock = product.Stock - qty;
     await product.save({ validateBeforeSave: false });
 }
 
@@ -125,11 +132,10 @@ async function updateStock(id, qty) {
 // delete order - only for admin
 const delete_Order = catchAsyncErrors(
     async (req, res, next) => {
-        const order = await Order.findById(req.params.orderid);
+        const order = await Order.findByIdAndDelete(req.params.id);
         if (!order) {
             return next(new ErrorHandler(`Requested order can't be found`, 404))
         }
-        await order.remove();
         res.status(200).json({
             success: true,
             message: 'Order deleted successfully',
