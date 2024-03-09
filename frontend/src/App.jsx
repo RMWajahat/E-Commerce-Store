@@ -1,10 +1,11 @@
-
+import { ReactNavbar } from "overlay-navbar"
+import applogo from "./assets/applogo.png"
 function App() {
 
 
   return (
     <>
-      <h1>E Commerce React App</h1>
+      <ReactNavbar logo={applogo} logoHoverColor="none" logoWidth="80px" burgerColor="" />
     </>
   )
 }
