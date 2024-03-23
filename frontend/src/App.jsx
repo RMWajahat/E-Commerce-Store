@@ -1,11 +1,14 @@
-import { ReactNavbar } from "overlay-navbar"
-import applogo from "./assets/applogo.png"
+import Navbar from "./components/Header component/Navbar"
+import Footer from "./components/Footer component/Footer"
+import Hero from "./components/Hero Section/Hero"
 function App() {
 
 
   return (
     <>
-      <ReactNavbar logo={applogo} logoHoverColor="none" logoWidth="80px" burgerColor="" />
+      <Navbar />
+      <Hero />
+      <Footer />
     </>
   )
 }
