@@ -6,6 +6,7 @@ import shirt from "../../assets/shirt.jpg"
 import SectionHeading from "../Extras/SectionHeading"
 import ProductsList from '../Products/ProductsList'
 import ProductViewPage from '../Products/ProductViewPage'
+import Categories from '../Categories/Categories'
 
 const Hero = () => {
     return (
@@ -75,6 +76,8 @@ const Hero = () => {
                 </div>
             </div>
             {/* product view starts  */}
+            <SectionHeading heading="Categories" />
+            <Categories />
             <SectionHeading heading="Featured Products" />
             <ProductsList />
         </>
