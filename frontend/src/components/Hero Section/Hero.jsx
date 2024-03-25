@@ -7,10 +7,12 @@ import SectionHeading from "../Extras/SectionHeading"
 import ProductsList from '../Products/ProductsList'
 import ProductViewPage from '../Products/ProductViewPage'
 import Categories from '../Categories/Categories'
+import PageTitle from '../Extras/PageTitle'
 
 const Hero = () => {
     return (
         <>
+            <PageTitle pagetitle={"GNES - Home"} />
             <div className="py-16 bg-white">
                 <div className="container m-auto px-6 space-y-8 text-gray-500 md:px-12 lg:px-20">
                     <div className="justify-center text-center gap-6 md:text-left md:flex lg:items-center  lg:gap-16">

@@ -9,7 +9,7 @@ const ProductsList = () => {
 
                     {
                         Array(5).fill().map((_, key) => (
-                            <Product producttitle="MENS'S RAGGED
+                            <Product key={key} producttitle="MENS'S RAGGED
                             WATERPROOF JACKET" productimg={["https://i.ibb.co/KqdgGY4/cosmetic-packaging-mockup-1150-40280.webp"]} rating="4" price="125" id={key} ratingsby={32} />
                         ))
                     }
