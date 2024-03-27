@@ -82,8 +82,14 @@ const Hero = () => {
             <Categories />
             <SectionHeading heading="Featured Products" />
             <ProductsList />
-        </>
 
+            {/* <ProductViewPage
+                title={"i-Phone X Max"}
+                productDescription={"The iPhone is a line of smartphones designed and marketed by Apple Inc. It runs on Apple's iOS mobile operating system. The first-generation iPhone was released on June 29, 2007, and multiple new hardware iterations with new iOS releases have been released since."}
+                price={430}
+                productImg={"https://imageio.forbes.com/specials-images/imageserve/641397e79f04500b85460b8f/Apple--iPhone-15--iPhone-15-Pro-Max--iPhone-15-Pro--iPhone-15-Pro-design--iPhone-15/0x0.jpg?format=jpg&crop=923,692,x364,y0,safe&width=960"}
+            /> */}
+        </>
     )
 }
 

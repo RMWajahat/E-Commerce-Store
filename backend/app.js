@@ -26,7 +26,7 @@ app.use(cookieParser()); // cookie parser ka use kara ga
 
 // cors usage
 app.use(crossOriginSharing({
-    origin: `http://localhost:${process.env.PORT}`,
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));

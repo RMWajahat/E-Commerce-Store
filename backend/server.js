@@ -4,7 +4,7 @@
 
 // dealing with uncaught exceptions   like I console.log(youtube ) which is not defined then it will give error and shut down the server     bejti hona sa bachh jae gi 
 
-process.on('uncaughtException',(err)=>{
+process.on('uncaughtException', (err) => {
     console.log(`Error: ${err.message}`);
     console.log('Shutting down the server due to uncaught exception');
     process.exit(1);
@@ -23,27 +23,30 @@ const connectDatabase = require('./database/databaseConnection');    // database
 
 // -------------------------------------------------------
 // initializations of Usages 
-dotenv.config({path:'./backend/config/config.env'});    // yahan btaya ka env wala kahan hain
+dotenv.config({ path: './backend/config/config.env' });    // yahan btaya ka env wala kahan hain
 
 
 // -------------------------------------------------------
 // Connecting to Data Base
 connectDatabase();    // yahan connectDatabase function ko call kia hai
 
+app.get('/', (req, res) => {
+    res.send('API is running');
+});
 
 
 
-const server = app.listen(process.env.PORT,()=>{    // process.env.VARIABLES in env file are accessed.
+const server = app.listen(process.env.PORT, () => {    // process.env.VARIABLES in env file are accessed.
     console.log(`Server started on port ${process.env.PORT}`);
 });
 
 
 
 // -------------------------------------------------------
-process.on('unhandledRejection',(err)=>{
+process.on('unhandledRejection', (err) => {
     console.log(`Error: ${err.message}`);
     console.log('Shutting down the server due to unhandled promise rejection');
-    server.close(()=>{
+    server.close(() => {
         process.exit(1);
     });
 });
