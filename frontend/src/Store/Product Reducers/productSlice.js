@@ -19,7 +19,6 @@ export const ProductSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.products = action.payload;
-            console.log("getting data from state", state.products);
             state.loading = false;
         });
         builder.addCase(getProducts.pending, (state) => {

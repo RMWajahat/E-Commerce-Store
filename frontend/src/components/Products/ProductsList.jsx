@@ -5,8 +5,7 @@ import { getProducts } from '../../Store/Product Reducers/productSlice';
 
 const ProductsList = () => {
     const dispatch = useDispatch();
-    const productList = useSelector((state) => state.products);
-    console.log("getting data from state", productList);
+    const AllProducts = useSelector((state) => state.product.products);
     useEffect(() => {
         dispatch(getProducts());
     }, []);
@@ -15,14 +14,14 @@ const ProductsList = () => {
             <div className="mx-auto container">
                 <div className="flex flex-wrap items-center lg:justify-between justify-center">
 
-                    {/* {
-                        productList.products.map((_, key) => (
-                            <Product key={key} producttitle="MENS'S RAGGED
-                            WATERPROOF JACKET" productimg={["https://i.ibb.co/KqdgGY4/cosmetic-packaging-mockup-1150-40280.webp"]} rating="4" price="125" id={key} ratingsby={32} />
-                        ))
-                    } */}
+                    {
+                        AllProducts ? AllProducts.map((product, key) => (
+                            <Product key={product._id} producttitle={product.name} productimg={["https://i.ibb.co/KqdgGY4/cosmetic-packaging-mockup-1150-40280.webp"]} rating={product.ratings} price={product.price} id={product._id} ratingsby={product.numberOfReviews} />
+                        )) : "Loading..."
+                    }
 
                 </div>
+
             </div>
         </div>
 
