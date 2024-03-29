@@ -11,6 +11,11 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
     const response = await axios.get("/api/ecommercev1/products");
     return response.data.products;
 });
+export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {
+    const response = await axios.get(`/api/ecommercev1/products/${id}`);
+    console.log(response.data.product, "response.data");
+    return response.data.product;
+});
 
 export const ProductSlice = createSlice({
     name: "product",
@@ -26,6 +31,20 @@ export const ProductSlice = createSlice({
         });
         builder.addCase(getProducts.rejected, (state, action) => {
             state.loading = false;
+            state.error = action.error.message;
+        });
+
+        // cases for single product
+        builder.addCase(getSingleProduct.fulfilled, (state, action) => {
+            state.products = action.payload;
+            state.loading = false;
+        });
+        builder.addCase(getSingleProduct.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(getSingleProduct.rejected, (state, action) => {
+            state.loading = false;
+            console.log("error occured    rejected");
             state.error = action.error.message;
         });
     },

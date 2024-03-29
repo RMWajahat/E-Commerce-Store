@@ -1,13 +1,13 @@
 import Navbar from "./components/Header component/Navbar"
 import Footer from "./components/Footer component/Footer"
-import Hero from "./components/Hero Section/Hero"
+import AllRoutes from "../Routers/AllRoutes"
 function App() {
 
 
   return (
     <>
       <Navbar />
-      <Hero />
+      <AllRoutes />
       <Footer />
     </>
   )

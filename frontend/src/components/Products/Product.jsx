@@ -6,7 +6,7 @@ const Product = (props) => {
     const [rating, setRating] = useState(props.rating);
     return (
         <>
-            <Link to={`/cart/${props.id}`}>
+            <Link to={`/products/${props.id}`}>
                 <div className="max-w-md mx-auto my-2">
                     <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 p-3 sm:ml-2">
 

@@ -1,9 +1,26 @@
-import React from 'react'
-import { FaShoppingCart } from "react-icons/fa"
+import React, { useEffect } from 'react'
+import { FaShoppingCart } from "react-icons/fa";
 
-const ProductViewPage = (props) => {
-    const integralPart = Math.floor(props.price);
-    const fractionalPart = (props.price - integralPart).toFixed(2).slice(2);
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getSingleProduct } from '../../Store/Product Reducers/productSlice';
+
+const ProductViewPage = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const product = useSelector((state) => state.product.products);
+    console.log(product);
+
+    useEffect(() => {
+        dispatch(getSingleProduct(id));
+    }, []);
+
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
+    const integralPart = Math.floor(product.price);
+    const fractionalPart = (product.price - integralPart).toFixed(2).slice(2);
 
     return (
         <div className="min-w-screen min-h-screen bg-yellow-300 flex items-center p-5 lg:p-10 overflow-hidden relative">
@@ -12,7 +29,7 @@ const ProductViewPage = (props) => {
                     <div className="w-full md:w-1/2 px-10 mb-10 md:mb-0">
                         <div className="relative">
                             <img
-                                src={props.productImg}
+                                src={product.productImages && product.productImages[0]}
                                 className="w-full relative z-10"
                                 alt=""
                             />
@@ -22,10 +39,10 @@ const ProductViewPage = (props) => {
                     <div className="w-full md:w-1/2 px-10">
                         <div className="mb-10">
                             <h1 className="font-bold uppercase text-2xl mb-5">
-                                {props.title}
+                                {product.name}
                             </h1>
                             <p className="text-sm">
-                                {props.productDescription}...{" "}
+                                {product.description}...{" "}
 
                             </p>
                         </div>

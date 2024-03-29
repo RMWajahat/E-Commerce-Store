@@ -8,6 +8,39 @@
 *::before,
 *::after {
     font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #2c3440;
+    cursor: pointer;
+}
+
+
+
+/* Custom Scrollbar */
+
+body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f9f9f9;
+    overflow-x: hidden;
+    user-select: none;
+    zoom: 1;
+
 }
 
 /* fonts added  */
