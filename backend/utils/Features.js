@@ -39,7 +39,7 @@ class Features {  //addng features to the query
         // /\b(lt | lte | gt | gte)\b/g                        its regular expression in js to find match in string     $regex is mongoose property to find the matching string      so can't be used here 
 
 
-        // ab sirf category bach gai hai query mai uss ki base pr search kr dein ga 
+        // ab sirf category bach gai hai query mai uss ki base pr search kr dein ga
         // kaam khatam itna hi kaam tha 
 
         this.query = this.query.find(JSON.parse(queryNew));     // ab jo string hai uss ko object mai convert krna ka lia hai

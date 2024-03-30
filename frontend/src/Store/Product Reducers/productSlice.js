@@ -4,6 +4,8 @@ import axios from "axios";
 const initialState = {
     loading: false,
     products: [],
+    productDetails: {},
+    Categories: [],
     error: "",
 }
 
@@ -13,8 +15,11 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
 });
 export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {
     const response = await axios.get(`/api/ecommercev1/products/${id}`);
-    console.log(response.data.product, "response.data");
     return response.data.product;
+});
+export const gettodayCategories = createAsyncThunk("product/gettodayCategories", async (category) => {
+    const response = await axios.get(`/api/ecommercev1/products?category=${category}`);
+    return response.data.products;
 });
 
 export const ProductSlice = createSlice({
@@ -36,7 +41,7 @@ export const ProductSlice = createSlice({
 
         // cases for single product
         builder.addCase(getSingleProduct.fulfilled, (state, action) => {
-            state.products = action.payload;
+            state.productDetails = action.payload;
             state.loading = false;
         });
         builder.addCase(getSingleProduct.pending, (state) => {
@@ -44,7 +49,20 @@ export const ProductSlice = createSlice({
         });
         builder.addCase(getSingleProduct.rejected, (state, action) => {
             state.loading = false;
-            console.log("error occured    rejected");
+            state.error = action.error.message;
+        });
+
+
+        // cases for categories specific product
+        builder.addCase(gettodayCategories.fulfilled, (state, action) => {
+            state.Categories = action.payload;
+            state.loading = false;
+        });
+        builder.addCase(gettodayCategories.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(gettodayCategories.rejected, (state, action) => {
+            state.loading = false;
             state.error = action.error.message;
         });
     },

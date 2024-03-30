@@ -30,7 +30,7 @@ const createProduct = catchAsyncErrors(
 // get method for getting all products from database
 const getProducts = catchAsyncErrors(
     async (req, res) => {
-        const resultsPerPage = 4;
+        const resultsPerPage = 8;
 
         // Product.find().populate("creator")                           we can also use this ----- this will replace user id with the whole user object whie fetching                                       mtlb product response ka sath user ka kala chitta khol ka samna bhaj de ga  
         const productsCount = await Product.countDocuments();  // yeh line of code hai jo database se count kr k products ki total count nikal raha hai

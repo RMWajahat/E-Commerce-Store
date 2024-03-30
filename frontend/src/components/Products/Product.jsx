@@ -3,16 +3,15 @@ import { Link } from 'react-router-dom'
 import { StarRating } from "star-ratings-react";
 
 const Product = (props) => {
-    const [rating, setRating] = useState(props.rating);
     return (
         <>
             <Link to={`/products/${props.id}`}>
-                <div className="max-w-md mx-auto my-2">
+                <div className="max-w-72 mx-auto my-2">
                     <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 p-3 sm:ml-2">
 
                         <img
                             className="rounded-t-lg p-4 h-64 aspect-square m-auto"
-                            src={props.productimg[0]}
+                            src={props.productimg}
                             alt="product image"
                         />
                         <div className="px-3 pb-3">
@@ -27,7 +26,7 @@ const Product = (props) => {
                                 </span>
                             </div>
                             <div className="flex items-center justify-between">
-                                <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                                <span className="text-3xl font-bold text-gray-900 dark:text-white ">
                                     ${props.price}
                                 </span>
                                 <Link

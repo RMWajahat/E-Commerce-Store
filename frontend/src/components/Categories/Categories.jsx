@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Category from './Category';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { gettodayCategories } from '../../Store/Product Reducers/productSlice';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Categories = () => {
+    const dispatch = useDispatch();
+    const categories = useSelector((state) => state.product.Categories);
+
+    useEffect(() => {
+        dispatch(gettodayCategories("fruits"));
+    }, []);
+
     return (
         <Swiper
             modules={[Autoplay]}
@@ -15,11 +24,13 @@ const Categories = () => {
             autoplay
             className='w-11/12 m-auto py-3'
         >
-            <SwiperSlide><Category image={"https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} title={"The Majestic and Wonderful Bahamas"} description={"The best kept secret of The Bahamas is the country's sheersize and diversity. With 16 major islands, The Bahamas is an unmatched destination"} price={110} rating={4} ratings={32} category={"Laptop"} id={1} /></SwiperSlide>
 
-            <SwiperSlide><Category image={"https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} title={"The Majestic and Wonderful Bahamas"} description={"The best kept secret of The Bahamas is the country's sheersize and diversity. With 16 major islands, The Bahamas is an unmatched destination"} price={110} rating={4} ratings={32} category={"Laptop"} id={2} /></SwiperSlide>
+            {
+                categories && categories.map((category, index) => (
+                    <SwiperSlide><Category key={index} image={category.productImages[0].url} title={category.name} description={category.description} price={category.price} rating={category.ratings} ratings={category.numberOfReviews} category={category.category} id={category._id} /></SwiperSlide>
+                ))
+            }
 
-            <SwiperSlide><Category image={"https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} title={"The Majestic and Wonderful Bahamas"} description={"The best kept secret of The Bahamas is the country's sheersize and diversity. With 16 major islands, The Bahamas is an unmatched destination"} price={110} rating={4} ratings={32} category={"Laptop"} id={3} /></SwiperSlide>
         </Swiper>
     )
 }
