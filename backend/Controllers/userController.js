@@ -59,7 +59,6 @@ const loginUser = catchAsyncErrors(
         if (is_validUser) {
             return sendTokenResponse(existingUser, 200, "User Logged in successfully", res);
         }
-        console.log("if this is printed then there is a bug ");
 
 
         return next(new ErrorHandler("Un-Authorized Access", 401));
