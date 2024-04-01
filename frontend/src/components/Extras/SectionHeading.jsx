@@ -1,6 +1,6 @@
 const SectionHeading = (props) => {
     return (
-        <div className="flex items-center justify-center bg-gray-100 py-4">
+        <div className="flex items-center justify-center py-4 w-full">
             <div className="w-full max-w-lg px-10 py-8 mx-auto bg-white rounded-lg shadow-xl">
                 <div className="max-w-md mx-auto space-y-2">
                     {/* Component starts here */}

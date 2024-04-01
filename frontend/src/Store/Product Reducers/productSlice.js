@@ -9,8 +9,8 @@ const initialState = {
     error: "",
 }
 
-export const getProducts = createAsyncThunk("product/getProducts", async () => {
-    const response = await axios.get("/api/ecommercev1/products");
+export const getProducts = createAsyncThunk("product/getProducts", async (keyword) => {
+    const response = await axios.get(`/api/ecommercev1/products?keyword=${keyword}`);
     return response.data.products;
 });
 export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {
