@@ -39,7 +39,8 @@ const getProducts = catchAsyncErrors(
         res.status(200).json({
             success: true,
             products: products,
-            productsCount: productsCount
+            productsCount: productsCount,
+            resultsPerPage: resultsPerPage
         })
     }
 );

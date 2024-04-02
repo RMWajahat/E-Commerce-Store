@@ -1,0 +1,28 @@
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #374151;
+    /* slate-700 */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: 500ms ease-out;
+}
+
+.slider:-webkit-slider-thumb:hover {
+    width: 20px;
+    height: 20px;
+}
+
+.slider::-webkit-slider-runnable-track {
+    background: #374151;
+    /* slate-700 */
+    height: 1px;
+}

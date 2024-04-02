@@ -4,14 +4,20 @@ import axios from "axios";
 const initialState = {
     loading: false,
     products: [],
+    resultperPage: 0,
+    productCount: 0,
     productDetails: {},
     Categories: [],
     error: "",
 }
 
-export const getProducts = createAsyncThunk("product/getProducts", async (keyword) => {
-    const response = await axios.get(`/api/ecommercev1/products?keyword=${keyword}`);
-    return response.data.products;
+export const getProducts = createAsyncThunk("product/getProducts", async ({ keyword, page, category }) => {
+    page = page || 1;
+    keyword = keyword || '';
+    category = category ? category.toLowerCase() : '';
+    console.log(keyword, page, category);
+    const { data } = await axios.get(`/api/ecommercev1/products?keyword=${keyword}&page=${page}&category=${category}`);
+    return data;
 });
 export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {
     const response = await axios.get(`/api/ecommercev1/products/${id}`);
@@ -28,11 +34,15 @@ export const ProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
-            state.products = action.payload;
+            state.products = action.payload.products;
+            state.resultperPage = action.payload.resultsPerPage;
+            state.productCount = action.payload.productsCount;
             state.loading = false;
+            state.error = "";
         });
         builder.addCase(getProducts.pending, (state) => {
             state.loading = true;
+            state.error = "";
         });
         builder.addCase(getProducts.rejected, (state, action) => {
             state.loading = false;
@@ -43,9 +53,11 @@ export const ProductSlice = createSlice({
         builder.addCase(getSingleProduct.fulfilled, (state, action) => {
             state.productDetails = action.payload;
             state.loading = false;
+            state.error = "";
         });
         builder.addCase(getSingleProduct.pending, (state) => {
             state.loading = true;
+            state.error = "";
         });
         builder.addCase(getSingleProduct.rejected, (state, action) => {
             state.loading = false;

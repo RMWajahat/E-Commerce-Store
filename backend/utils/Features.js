@@ -28,6 +28,10 @@ class Features {  //addng features to the query
             delete Newquery[key];           // yeh keyword, limit, page ko remove krna ka lia hai
         });
 
+        if (Newquery.category == '') {
+            delete Newquery.category;   // agr category empty hai tou remove kr da ga
+        }
+
 
 
         // aik aur cheez hai jo filter krna hai wo hai filter by price lekin uss ka lia kaam ata hain mongoose   opaerators 

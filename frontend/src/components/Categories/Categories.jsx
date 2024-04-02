@@ -27,7 +27,7 @@ const Categories = () => {
 
             {
                 categories && categories.map((category, index) => (
-                    <SwiperSlide><Category key={index} image={category.productImages[0].url} title={category.name} description={category.description} price={category.price} rating={category.ratings} ratings={category.numberOfReviews} category={category.category} id={category._id} /></SwiperSlide>
+                    <SwiperSlide key={index}><Category key={index} image={category.productImages[0].url} title={category.name} description={category.description} price={category.price} rating={category.ratings} ratings={category.numberOfReviews} category={category.category} id={category._id} /></SwiperSlide>
                 ))
             }
 
