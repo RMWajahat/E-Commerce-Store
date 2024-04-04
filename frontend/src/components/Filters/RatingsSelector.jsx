@@ -4,7 +4,7 @@ import { getProducts } from '../../Store/Product Reducers/productSlice';
 
 
 const RatingsSelector = () => {
-    const [ratings, setRatings] = useState(Number(localStorage.getItem('ratings')) || 5);
+    const [ratings, setRatings] = useState(Number(localStorage.getItem('ratings')) || 1);
     const dispatch = useDispatch();
     useEffect(() => {
         localStorage.setItem('ratings', ratings);

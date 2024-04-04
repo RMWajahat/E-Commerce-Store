@@ -4,13 +4,14 @@ import { getProducts } from '../../Store/Product Reducers/productSlice';
 
 const CategorySelector = () => {
     const categories = ['Fruits', 'Fashion', 'Books', 'Cars', 'Sports', 'Toys'];
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(localStorage.getItem('category') || '');
     const dispatch = useDispatch();
 
     useEffect(() => {
+        localStorage.setItem('category', selectedCategory);
         dispatch(getProducts({ category: selectedCategory }));
 
-    }, [selectedCategory]);
+    }, [dispatch, selectedCategory]);
 
     return (
         <select

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageTitle from './PageTitle';
 
 const ErrorPage = () => {
     return (
         <>
+            <PageTitle pagetitle={"Wrong Turn 🚫"} />
             <div
                 className="flex items-center justify-center min-h-screen bg-indigo-500  bg-fixed bg-cover bg-bottom error-bg"
                 style={{

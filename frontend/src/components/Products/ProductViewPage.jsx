@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { MdFeedback } from "react-icons/md";
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import './products.css';
-
 import 'swiper/css';
 import 'swiper/css/autoplay';
+
+import './products.css';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -22,11 +22,6 @@ const ProductViewPage = () => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product.productDetails);
 
-    const tempreview = {
-        user: 'John Doe',
-        rating: 4,
-        comment: 'This is a great product. I would recommend it to anyone'
-    }
 
     useEffect(() => {
         dispatch(getSingleProduct(id));
@@ -42,7 +37,7 @@ const ProductViewPage = () => {
     return (
 
         <div className="min-w-screen min-h-screen bg-yellow-300 flex items-center p-5 lg:p-10 overflow-hidden relative flex-col gap-3">
-            <PageTitle pagetitle={"GNES - Product View"} />
+            <PageTitle pagetitle={`GNES - ${product.name}`} />
             <div className="w-full max-w-6xl rounded bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left">
                 <div className="flex justify-between item-center w-full md:w-11/12 m-auto">
                     <p className="flex text-gray-500 font-medium gap-1 md:gap-3">Category

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import 'tailwindcss/tailwind.css' // Import the Tailwind CSS styles
 import SectionHeading from '../Extras/SectionHeading'
+import PageTitle from '../Extras/PageTitle';
 
 const Contact = () => {
     const [name, setName] = useState('');
@@ -15,6 +16,7 @@ const Contact = () => {
     }
     return (
         <>
+            <PageTitle pagetitle={"GNES - Contact Us"} />
             <SectionHeading heading='Contact Us' />
 
             <div className='w-screen h-fit py-12 '>

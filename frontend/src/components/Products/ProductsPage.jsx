@@ -19,7 +19,7 @@ const ProductsPage = () => {
     const [filters, setShowFilter] = useState(false);
 
     useEffect(() => {
-        dispatch(getProducts({ keyword: keyword, page: currentPage }));
+        dispatch(getProducts({ keyword: keyword, page: currentPage, category: '', ratings: 1 }));
     }, [dispatch, currentPage, keyword]);
 
     useEffect(() => {

@@ -12,7 +12,7 @@ const ProductsList = () => {
     const [Allproducts, setAllproducts] = useState(products);
 
     useEffect(() => {
-        dispatch(getProducts({ keyword: '', page: currentPage, category: '', ratings: 5 }));
+        dispatch(getProducts({ keyword: '', page: currentPage, category: '', ratings: 1 }));
     }, [dispatch, currentPage]);
 
     useEffect(() => {
