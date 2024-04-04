@@ -1,0 +1,80 @@
+import React, { useState } from 'react'
+import 'tailwindcss/tailwind.css' // Import the Tailwind CSS styles
+import SectionHeading from '../Extras/SectionHeading'
+
+const Contact = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setName('');
+        setEmail('');
+        setMessage('');
+    }
+    return (
+        <>
+            <SectionHeading heading='Contact Us' />
+
+            <div className='w-screen h-fit py-12 '>
+                <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto p-8 bg-gray-800 rounded-lg shadow-lg form-container ">
+                    <h2 className="text-2xl font-semibold text-white mb-6">Say Something!</h2>
+                    <form method="POST" onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label htmlFor="name" className="block text-gray-300 text-sm font-bold mb-2">
+                                Your Name
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                name="name"
+                                placeholder="John Doe"
+                                required=""
+                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="email" className="block text-gray-300 text-sm font-bold mb-2">
+                                Your Email
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                name="email"
+                                placeholder="john@example.com"
+                                required=""
+                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <label htmlFor="message" className="block text-gray-300 text-sm font-bold mb-2">
+                                Your Message
+                            </label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                rows={4}
+                                placeholder="How can we help you?"
+                                required=""
+                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
+                                defaultValue={""}
+                            />
+                        </div>
+                        <input type="submit" value="Send Message" className='border-2 px-3 py-1 rounded-md text-white border-slate-200  hover:bg-white hover:text-black cursor-pointer' />
+
+                    </form>
+                </div>
+            </div>
+
+        </>
+    )
+}
+
+export default Contact

@@ -11,12 +11,11 @@ const initialState = {
     error: "",
 }
 
-export const getProducts = createAsyncThunk("product/getProducts", async ({ keyword, page, category }) => {
+export const getProducts = createAsyncThunk("product/getProducts", async ({ keyword, page, category, loweramount = 0, highamount = 10000, ratings = Number(localStorage.getItem('ratings')) }) => {
     page = page || 1;
     keyword = keyword || '';
     category = category ? category.toLowerCase() : '';
-    console.log(keyword, page, category);
-    const { data } = await axios.get(`/api/ecommercev1/products?keyword=${keyword}&page=${page}&category=${category}`);
+    const { data } = await axios.get(`/api/ecommercev1/products?keyword=${keyword}&page=${page}&category=${category}&price[gte]=${loweramount}&price[lte]=${highamount}&ratings[lte]=${ratings}`);
     return data;
 });
 export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {

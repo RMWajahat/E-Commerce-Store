@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MultiRangeSlider.css';
+import { getProducts } from '../../Store/Product Reducers/productSlice';
+import { useDispatch } from 'react-redux';
 
 const MultiRangeSlider = () => {
     const [lowerValue, setLowerValue] = useState(0);
     const [upperValue, setUpperValue] = useState(10000);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProducts({ loweramount: lowerValue, highamount: upperValue }));
+    }, [lowerValue, upperValue, dispatch])
 
     return (
         <div className="space-y-4 w-72 m-auto">

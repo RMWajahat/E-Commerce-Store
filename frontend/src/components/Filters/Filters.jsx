@@ -1,12 +1,16 @@
 import React from 'react';
-import MultiRangeSlider from '../Filters/RangeSelector';
-import CategorySelector from '../Filters/CategorySelector';
+import MultiRangeSlider from './RangeSelector';
+import CategorySelector from './CategorySelector';
+import RatingsSelector from './RatingsSelector';
 
 const Filters = () => {
     return (
-        <div className='flex w-3/4 m-auto gap-10  justify-start bg-white shadow-2xl rounded-lg py-3 px-5'>
+        <div className='flex flex-col md:flex-row w-fit m-auto gap-1 md:gap-10  justify-start bg-white shadow-2xl rounded-lg py-3 px-6'>
             <MultiRangeSlider />
-            <CategorySelector />
+            <div className="rightsideselectors flex flex-col gap-2 w-auto">
+                <CategorySelector />
+                <RatingsSelector />
+            </div>
         </div>
     )
 }
