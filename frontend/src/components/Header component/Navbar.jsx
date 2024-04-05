@@ -1,5 +1,6 @@
 import logo from "../../assets/applogo.png";
-import { FaShoppingCart, FaShoppingBasket, FaUser, FaBars, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart, FaUserPlus, FaBars, FaTimes } from 'react-icons/fa';
+import { LuLogIn } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -21,10 +22,10 @@ const Navbar = () => {
                 <Link to="/products" className="text-white hover:text-blue-100 hover:border-b-2 hover:border-white">Products</Link>
                 <Link to="/contact" className="text-white hover:text-blue-100 hover:border-b-2 hover:border-white">Contact</Link>
             </div>
-            <div className={`flex items-center space-x-5 ${showNav ? 'block' : 'hidden'}`}>
-                <Link to="/cart" className="text-white cursor-pointer text-xl"><FaShoppingCart /></Link>
-                <Link to="/shop" className="text-white cursor-pointer text-xl"><FaShoppingBasket /></Link>
-                <Link to="/user" className="text-white cursor-pointer text-xl"><FaUser /></Link>
+            <div className={`flex items-center space-x-5 gap-2 transition-all duration-700 ${showNav ? 'block' : 'hidden'}`}>
+                <Link to="/cart" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaShoppingCart title="Cart" className="text-xl" /></Link>
+                <Link to="/login" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><LuLogIn title="Login" className="text-xl" /></Link>
+                <Link to="/login" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaUserPlus title="Signup to be a user" className="text-xl" /></Link>
             </div>
             <div className="flex items-center">
                 <button onClick={toggleNav} className="text-white cursor-pointer text-xl">

@@ -8,6 +8,10 @@ export default defineConfig({
         target: 'http://localhost:4000',
         rewrite: (path) => path.startsWith('/api') ? path : `/api${path}`,
       },
+      '/auth': {
+        target: 'http://localhost:4000',
+        rewrite: (path) => path.startsWith('/auth') ? path : `/auth${path}`,
+      },
     },
   },
   plugins: [react()],
