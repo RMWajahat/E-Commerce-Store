@@ -12,7 +12,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={GNES_STORE}>
     <BrowserRouter>
       <App />
-      <ToastContainer />
+      <ToastContainer
+        closeOnClick />
     </BrowserRouter>
   </Provider>,
 )

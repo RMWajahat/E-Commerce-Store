@@ -10,15 +10,20 @@ const initialState = {
 let server_error = "";
 
 export const loginUser = createAsyncThunk("user/loginUser", async ({ email, password }) => {
-    console.log(email, password);
-    const response = null;
+    let response = null;
     try {
         response = await axios.post('/auth/login', { email, password });
+        let { userlogged } = response.data;
+        let storage = userlogged.email;
+        console.log(storage);
+        localStorage.setItem('user', storage);
+
+
     } catch (error) {
         server_error = error.response.data.message;
-        console.log(server_error);
     }
     return response.data;
+
 });
 
 const UserSlice = createSlice({

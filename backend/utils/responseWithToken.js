@@ -9,7 +9,8 @@ const sendTokenResponse = (User_current, statusCode, message, res) => {
     res.cookie('token', token_for_user, options);
     res.status(statusCode).json({
         success: true,
-        message: message
+        message: message,
+        userlogged: User_current
     })
 }
 
