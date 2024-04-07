@@ -5,6 +5,7 @@ import Footer from '../src/components/Footer component/Footer';
 import Loader from '../src/components/Extras/Loader';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user'));
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -14,11 +15,13 @@ function App() {
       clearTimeout();
     }
   }, []);
+
+
   return (
     <>
       {isLoading ? <Loader /> : <>
-        <Navbar />
-        <AllRoutes />
+        <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        <AllRoutes setCurrentUser={setCurrentUser} currentUser={currentUser} />
         <Footer /></>}
     </>
   )

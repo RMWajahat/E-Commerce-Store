@@ -8,7 +8,7 @@ import About from '../src/components/About Us Page/About';
 import Contact from '../src/components/Contact Us Page/Contact';
 import Login from '../src/components/User/Login';
 import Register from '../src/components/User/Register';
-const AllRoutes = () => {
+const AllRoutes = ({ currentUser, setCurrentUser }) => {
     return (
         <div>
             <Routes>
@@ -16,7 +16,7 @@ const AllRoutes = () => {
                 <Route exact path="/home" element={<Hero />} />
                 <Route path="/products/:id" element={<ProductViewPage />} />
                 <Route exact path="/products" element={<ProductsPage />} />
-                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/login" element={<Login setCurrentUser={setCurrentUser} currentUser={currentUser} />} />
                 <Route exact path="/register" element={<Register />} />
                 <Route exact path="/about" element={<About />} />
                 <Route exact path="/contact" element={<Contact />} />

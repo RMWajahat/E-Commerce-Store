@@ -1,11 +1,27 @@
 import logo from "../../assets/applogo.png";
 import { FaShoppingCart, FaUserPlus, FaBars, FaTimes } from 'react-icons/fa';
-import { LuLogIn } from "react-icons/lu";
+import { LuLogIn, LuLogOut } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { LogOut } from "../../Store/User Reducers/UserSlice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-const Navbar = () => {
+const Navbar = ({ currentUser, setCurrentUser }) => {
     const [showNav, setShowNav] = useState(false);
+    const dispatch = useDispatch();
+
+
+
+    const handleLogout = () => {
+        if (currentUser) {
+            localStorage.removeItem('user');
+            User = null;
+            dispatch(LogOut());
+        } else {
+            toast.error("User Logged Out Already");
+        }
+    };
 
     const toggleNav = () => {
         setShowNav(!showNav);
@@ -23,9 +39,15 @@ const Navbar = () => {
                 <Link to="/contact" className="text-white hover:text-blue-100 hover:border-b-2 hover:border-white">Contact</Link>
             </div>
             <div className={`flex items-center space-x-5 gap-2 transition-all duration-700 ${showNav ? 'block' : 'hidden'}`}>
-                <Link to="/cart" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaShoppingCart title="Cart" className="text-xl" /></Link>
-                <Link to="/login" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><LuLogIn title="Login" className="text-xl" /></Link>
-                <Link to="/login" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaUserPlus title="Signup to be a user" className="text-xl" /></Link>
+                {
+                    currentUser && currentUser != undefined && <Link to="/cart" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaShoppingCart title="Cart" className="text-xl" /></Link>
+                }
+                {
+                    currentUser == null || currentUser == undefined ? <>
+                        <Link to="/login" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><LuLogIn title="Login" className="text-xl" /></Link>
+                        <Link to="/register" className="text-white cursor-pointer text-md flex gap-1 flex-col items-center"><FaUserPlus title="Signup to be a user" className="text-xl" /></Link>
+                    </> : <button className="text-slate-900 bg-slate-200 font-semibold hover:bg-red-300 cursor-pointer text-sm flex text-nowrap gap-2 px-3 py-2 rounded-md items-center" title="Logout" onClick={handleLogout}>Logout <LuLogOut /></button>
+                }
             </div>
             <div className="flex items-center">
                 <button onClick={toggleNav} className="text-white cursor-pointer text-xl">

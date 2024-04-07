@@ -6,43 +6,44 @@ import { HiOutlineMail } from "react-icons/hi";
 import './Login.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../Store/User Reducers/UserSlice';
-import { toast } from 'react-toastify';
 import PageTitle from '../Extras/PageTitle';
+import { toast } from 'react-toastify';
 
-const Login = () => {
+const Login = ({ currentUser, setCurrentUser }) => {
     const dispatch = useDispatch();
-    const [currentUser, setCurrentUser] = useState(localStorage.getItem('user'));
     const User = useSelector(state => state.user);
-    useEffect(() => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordShown, setPasswordShown] = useState(false);
 
-        if (User.user && User.user.success == true) {
+    useEffect(() => {
+        setCurrentUser(localStorage.getItem('user'));
+        if (currentUser && User && User.user && User.user.success == true) {
             toast.success(User.user.message);
-        } else {
+            setEmail("");
+            setPassword("");
+        } else if (User && User.error) {
             toast.error(User.error);
         }
     }, [dispatch, User]);
+
     const handleSignUp = (e) => {
         e.preventDefault();
         const storedUser = localStorage.getItem('user');
         if (storedUser == email) {
             toast.info("User Already Logged in");
         } else {
-            dispatch(loginUser({ email, password }));
+            dispatch(loginUser({ email, password })).then(() => {
+                setEmail("");
+                setPassword("");
+            });
         }
-        setEmail("");
-        setPassword("");
-
     }
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordShown, setPasswordShown] = useState(false);
 
     return (
         <>
-
             {
-                User.user ? <PageTitle pagetitle={`Welcome ${User.user.userlogged.name}`} /> : <PageTitle pagetitle={"GNES - Login"} />
+                currentUser ? <PageTitle pagetitle={`Welcome ${currentUser}`} /> : <PageTitle pagetitle={"GNES - Login"} />
             }
             <div className="login_signup_container ">
                 <form className="form" method='post'>
