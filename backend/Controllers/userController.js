@@ -11,7 +11,6 @@ const crypto = require('crypto');
 const registerUser = catchAsyncErrors(
     async (req, res, next) => {
         const { name, email, password, role, createdAt } = req.body;
-
         if (!name || !email || !password) {
             return next(new ErrorHandler("Please fill all the fields", 400));
         }

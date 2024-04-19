@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../Store/User Reducers/UserSlice';
 import PageTitle from '../Extras/PageTitle';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ currentUser, setCurrentUser }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const User = useSelector(state => state.user);
     const [email, setEmail] = useState("");
@@ -17,15 +19,18 @@ const Login = ({ currentUser, setCurrentUser }) => {
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
-        setCurrentUser(localStorage.getItem('user'));
-        if (currentUser && User && User.user && User.user.success == true) {
-            toast.success(User.user.message);
-            setEmail("");
-            setPassword("");
-        } else if (User && User.error) {
-            toast.error(User.error);
-        }
-    }, [dispatch, User]);
+        setTimeout(() => {
+            if (currentUser) {
+                toast.success(User.user.message);
+                setEmail("");
+                setPassword("");
+                navigate("/profile")
+            } else if (User && User.error) {
+                toast.error(User.error);
+            }
+        }, 1000);
+    }, [currentUser, User]);
+
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -36,7 +41,10 @@ const Login = ({ currentUser, setCurrentUser }) => {
             dispatch(loginUser({ email, password })).then(() => {
                 setEmail("");
                 setPassword("");
-            });
+                setTimeout(() => {
+                    setCurrentUser(localStorage.getItem('user'));
+                }, 600);
+            })
         }
     }
 
@@ -89,6 +97,7 @@ const Login = ({ currentUser, setCurrentUser }) => {
                 </form>
             </div>
         </>
+
     )
 }
 

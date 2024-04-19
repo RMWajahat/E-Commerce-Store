@@ -1,23 +1,42 @@
 import logo from "../../assets/applogo.png";
 import { FaShoppingCart, FaUserPlus, FaBars, FaTimes } from 'react-icons/fa';
 import { LuLogIn, LuLogOut } from "react-icons/lu";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { LogOut } from "../../Store/User Reducers/UserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const Navbar = ({ currentUser, setCurrentUser }) => {
+    const navigate = useNavigate();
+    let User = useSelector(state => state.user.user);
     const [showNav, setShowNav] = useState(false);
     const dispatch = useDispatch();
 
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (currentUser) {
+                setCurrentUser(localStorage.getItem('user'));
+            } else if (User && User.error) {
+                toast.error(User.error);
+            }
+        }, [navigate, currentUser, User])
+    });
 
     const handleLogout = () => {
         if (currentUser) {
             localStorage.removeItem('user');
             User = null;
-            dispatch(LogOut());
+            dispatch(LogOut()).then(() => {
+                setTimeout(() => {
+                    if (User == null || User == undefined) {
+                        toast.success("User Logged Out Successfully");
+                        navigate("/login");
+                    }
+                }, 1500);
+            });
+
         } else {
             toast.error("User Logged Out Already");
         }
