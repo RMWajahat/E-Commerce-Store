@@ -6,10 +6,17 @@ const sendEmail = require('../utils/sendEmail');
 
 const bcrypter = require('bcryptjs');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary');
+
 
 
 const registerUser = catchAsyncErrors(
     async (req, res, next) => {
+        let myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
+        })
         const { name, email, password, role, createdAt } = req.body;
         if (!name || !email || !password) {
             return next(new ErrorHandler("Please fill all the fields", 400));
@@ -22,8 +29,8 @@ const registerUser = catchAsyncErrors(
         }
         const usernew = await User.create({
             name, email, password, avatar: {
-                public_id: "Some public id will be here from cloudinary",
-                url: "random url"
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url
 
             }, role, createdAt
         }

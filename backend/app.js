@@ -3,6 +3,9 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const crossOriginSharing = require('cors');
 
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+
 const ErrorMiddleWare = require('./middleware/error');
 
 // importing product router   // router ko import kia hai
@@ -10,13 +13,15 @@ const ErrorMiddleWare = require('./middleware/error');
 const productRoutesAll = require("./Routes/ProductsRoutes");  // router ko import kia hai
 const user_routes = require("./Routes/userRoutes");
 const orderRoutes = require("./Routes/OrderRoutes");
+const contactRoutes = require("./Routes/ContactRoutes");
 
 
 
 
 const app = express();
 app.use(express.json());    // yani ka app express ka use kara ga or json ka use kara ga
-
+app.use(bodyParser.urlencoded({ extended: true }));    // body parser ka use kara ga or urlencoded ka use kara ga    extended: true ka mtlb hai ka koi bhi data jo a raha hai wo parse ho jae ga
+// aur use krna ki waja yeh hai k bodyparser hamein help kara ga in
 
 // initaializing usages 
 
@@ -36,7 +41,9 @@ app.use(crossOriginSharing({
 // Now using product router in app.js     calling api
 app.use("/api/ecommercev1", productRoutesAll)
 app.use("/api/ecommercev1", orderRoutes)
+app.use("/api/ecommercev1", contactRoutes)
 app.use("/auth", user_routes)
+
 
 
 

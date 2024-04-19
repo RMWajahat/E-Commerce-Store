@@ -1,5 +1,4 @@
 // Desc: main file of backend
-// Date: 5/30/2021
 
 
 // dealing with uncaught exceptions   like I console.log(youtube ) which is not defined then it will give error and shut down the server     bejti hona sa bachh jae gi 
@@ -19,6 +18,7 @@ process.on('uncaughtException', (err) => {
 const app = require('./app');
 const dotenv = require('dotenv');   // dotenv ka use env values ko use krna ka lia kia hai
 const connectDatabase = require('./database/databaseConnection');    // databaseConnection.js ko import kia hai
+const cloudinary = require('cloudinary');    // cloudinary ko import kia hai
 
 
 // -------------------------------------------------------
@@ -29,6 +29,13 @@ dotenv.config({ path: './backend/config/config.env' });    // yahan btaya ka env
 // -------------------------------------------------------
 // Connecting to Data Base
 connectDatabase();    // yahan connectDatabase function ko call kia hai
+
+// cloudinary ko configure krna hai 
+cloudinary.config({
+    cloudname: process.env.CLOUDINARY_NAME,     // cloudinary ko configure krna hai    uss ka name hain
+    api_key: process.env.CLOUDINARY_API_KEY,            //  api_key and api_secret ko configure krna hai
+    api_secret: process.env.CLOUDINARY_API_SECRET       // koi secret hai k koi bhi track nah krr ska secure krna ka lia 
+})
 
 app.get('/', (req, res) => {
     res.send('API is running');

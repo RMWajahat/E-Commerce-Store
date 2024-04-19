@@ -1,18 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'tailwindcss/tailwind.css' // Import the Tailwind CSS styles
 import SectionHeading from '../Extras/SectionHeading'
 import PageTitle from '../Extras/PageTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactUs } from '../../Store/Contact Reducers/contactSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const Contact = useSelector(state => state.contact);
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setName('');
-        setEmail('');
-        setMessage('');
+        dispatch(contactUs({ name, email, message }));
+        setTimeout(() => {
+
+        }, 600);
+        if (Contact && Contact.contacted) {
+            toast.info(Contact.message);
+
+            setName('');
+            setEmail('');
+            setMessage('');
+        } else if (Contact && Contact.error) {
+            toast.error(Contact.error);
+            if (!Contact.error.includes("Contact validation failed")) {
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1000);
+            }
+        }
     }
     return (
         <>
@@ -64,9 +88,8 @@ const Contact = () => {
                                 onChange={(e) => setMessage(e.target.value)}
                                 rows={4}
                                 placeholder="How can we help you?"
-                                required=""
+                                required
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-700 text-white"
-                                defaultValue={""}
                             />
                         </div>
                         <input type="submit" value="Send Message" className='border-2 px-3 py-1 rounded-md text-white border-slate-200  hover:bg-white hover:text-black cursor-pointer' />

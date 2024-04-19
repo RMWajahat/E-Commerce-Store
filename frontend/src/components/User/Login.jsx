@@ -18,18 +18,6 @@ const Login = ({ currentUser, setCurrentUser }) => {
     const [password, setPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (currentUser) {
-                toast.success(User.user.message);
-                setEmail("");
-                setPassword("");
-                navigate("/profile")
-            } else if (User && User.error) {
-                toast.error(User.error);
-            }
-        }, 1000);
-    }, [currentUser, User]);
 
 
     const handleSignUp = (e) => {
@@ -39,8 +27,14 @@ const Login = ({ currentUser, setCurrentUser }) => {
             toast.info("User Already Logged in");
         } else {
             dispatch(loginUser({ email, password })).then(() => {
-                setEmail("");
-                setPassword("");
+                if (currentUser) {
+                    toast.success(User.user.message);
+                    setEmail("");
+                    setPassword("");
+                    navigate("/profile")
+                } else if (User && User.error) {
+                    toast.error(User.error);
+                }
                 setTimeout(() => {
                     setCurrentUser(localStorage.getItem('user'));
                 }, 600);
