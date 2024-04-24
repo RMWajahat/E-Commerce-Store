@@ -39,7 +39,8 @@ const Contact = () => {
         }
     }
     return (
-        <>
+        <div style={{ position: 'relative' }}>
+            <video style={{ position: 'absolute', height: '100%', objectFit: 'cover', zIndex: '-1' }} autoPlay loop muted src="https://media.istockphoto.com/id/1354242373/video/beautiful-space-flight-to-the-earth-moving-through-asteroids-cloud-near-moon-and-orbiting.mp4?s=mp4-640x640-is&k=20&c=uuuSlZ4PCBNCq4kd26xKC55geSfYHxQwuxAWF6H9LR8="></video>
             <PageTitle pagetitle={"GNES - Contact Us"} />
             <SectionHeading heading='Contact Us' />
 
@@ -98,7 +99,7 @@ const Contact = () => {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }
 

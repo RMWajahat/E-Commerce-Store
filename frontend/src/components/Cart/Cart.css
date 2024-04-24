@@ -1,0 +1,451 @@
+/* cart pop */
+.cartcontainer {
+    width: 35vw;
+    height: 96vh;
+    overflow: hidden;
+    background: #e1e1e1fd;
+    position: fixed;
+    top: 10px;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    padding-left: 0.5vw;
+    box-shadow: 0 0 10px rgba(104, 105, 105, 0.326),
+        inset 0 -1px 10px aliceblue;
+    border-radius: 5px;
+    transition: 500ms ease-in-out;
+
+}
+
+.cartcontainer::-webkit-scrollbar {
+    width: 0;
+}
+
+.cartcontainer .head {
+    width: 100%;
+    height: 8vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.cartcontainer .head h1 {
+    font-size: 1.4vw;
+    font-weight: 600;
+    color: var(--fg-color);
+
+}
+
+.cartcontainer .head h1 span {
+    font-weight: 500;
+
+}
+
+.cartcontainer .head .closecart {
+    font-size: 2vw;
+    color: var(--fg-color);
+    cursor: pointer;
+}
+
+.cartcontainer .allcarts {
+    width: 96%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    height: 80vh;
+    overflow: hidden;
+    align-items: start;
+    overflow-y: scroll;
+}
+
+.isempty {
+    width: 30vw;
+    height: 70vh;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    text-align: center;
+    font-family: 'poppins';
+    font-size: 2vw;
+    color: var(--product-desc-clr);
+}
+
+.isempty a {
+    font-size: 1.4vw;
+    transition: 200ms ease-in;
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+    align-items: center;
+}
+
+.isempty a:hover {
+    text-decoration: underline;
+}
+
+.isempty a .goback {
+    transition: 300ms ease-in-out;
+}
+
+.isempty a:hover .goback {
+    transform: translateX(5px);
+}
+
+
+.cartcontainer .allcarts .cartitem {
+    padding-top: 5px;
+    height: fit-content;
+    width: 130%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--fg-color);
+    gap: 5px;
+
+}
+
+.cartcontainer .allcarts .cartitem:last-child {
+    margin-bottom: 5vh;
+
+}
+
+.cartcontainer .allcarts .cartitem .left img {
+    height: 8vw;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+}
+
+.cartcontainer .allcarts .cartitem .right {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2vw;
+}
+
+.cartcontainer .allcarts .cartitem .right .detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+}
+
+.cartcontainer .allcarts .cartitem .right .detail h1 {
+    font-size: 1.6vw;
+    color: var(--fg-color);
+    font-weight: 700;
+}
+
+.cartcontainer .allcarts .cartitem .right .detail small {
+    font-size: 1vw;
+    color: var(--product-desc-clr);
+    font-weight: 400;
+}
+
+.cartcontainer .allcarts .cartitem .right .otherremove {
+    display: flex;
+    width: 20vw;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cartcontainer .allcarts .cartitem .right .otherremove .remove {
+    font-size: 1vw;
+    color: rgb(197, 5, 5);
+    background: transparent;
+    transition: 200ms ease-in;
+    display: flex;
+    flex-direction: row;
+    gap: 0vw;
+    align-items: center;
+}
+
+.cartcontainer .allcarts .cartitem .right .otherremove .remove:hover {
+    text-decoration: underline;
+
+}
+
+.cartcontainer .allcarts .cartitem .right .otherremove .pricing {
+    display: flex;
+    flex-direction: row;
+    color: rgba(11, 10, 10, 0.828);
+    font-weight: 700;
+    font-size: larger;
+}
+
+.cartcontainer .allcarts .cartitem .right .otherremove .pricing .oldone {
+    color: var(--product-desc-clr);
+    font-weight: 500;
+    text-decoration: line-through;
+}
+
+
+.cartcontainer .allcarts::-webkit-scrollbar {
+    width: 0;
+
+}
+
+
+.totalncheckout {
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: var(--bg-color);
+}
+
+.totalncheckout .totalpricing {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    align-items: center;
+    padding-left: 1vw;
+}
+
+.totalncheckout .totalpricing h1 {
+    font-weight: 700;
+    font-size: 1.3vw;
+    color: var(--fg-color);
+}
+
+.totalncheckout .totalpricing small {
+    font-weight: 800;
+    font-size: 1.2vw;
+    color: rgb(170, 18, 18);
+    padding-left: 3px;
+}
+
+.totalncheckout .checkoutpayment {
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 1.2vw;
+    background: var(--fg-color);
+    color: var(--bg-color);
+    width: 95%;
+    margin: auto;
+    height: 65%;
+    transition: 200ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.totalncheckout .checkoutpayment:hover {
+    background: rgba(0, 0, 0, 0.866);
+}
+
+
+
+@media screen and (width<=850px) {
+
+    /* cart pop */
+    .cartcontainer {
+        width: 60vw;
+        height: 98vh;
+    }
+
+    .cartcontainer .head {
+        height: 10vh;
+    }
+
+
+    .cartcontainer .head h1 {
+        font-size: 2.8vw;
+        font-weight: 700;
+
+    }
+
+    .cartcontainer .head .closecart {
+        font-size: 3.4vw;
+        margin-right: 2vw;
+    }
+
+    .cartcontainer .allcarts {
+        width: 96%;
+        gap: 8px;
+        box-shadow: none;
+    }
+
+    .isempty {
+        width: 50vw;
+        height: 20vh;
+        font-size: 3.9vw;
+    }
+
+    .isempty a {
+        font-size: 2.8vw;
+        gap: 2px;
+    }
+
+    .cartcontainer .allcarts .cartitem {
+        padding-top: 14px;
+        gap: 10px;
+
+    }
+
+    .cartcontainer .allcarts .cartitem .left img {
+        height: 12vw;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        margin-left: 1vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right {
+        gap: 2.5vw;
+        margin-bottom: 1vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail {
+        gap: 2px;
+
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail h1 {
+        font-size: 2.7vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail small {
+        font-size: 1.8vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .otherremove .remove {
+        font-size: 2vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .otherremove .pricing {
+        font-size: 2vw;
+        gap: 16px;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .otherremove {
+        gap: 12vw;
+    }
+
+    .totalncheckout {
+        height: 14vh;
+    }
+
+    .totalncheckout .totalpricing {
+        padding-left: 2.2vw;
+    }
+
+    .totalncheckout .totalpricing h1 {
+        font-size: 2.5vw;
+    }
+
+    .totalncheckout .totalpricing small {
+        font-size: 2.1vw;
+        padding-left: 5px;
+    }
+
+    .totalncheckout .checkoutpayment {
+        letter-spacing: 5px;
+        font-size: 2.2vw;
+        height: 9vh;
+        width: 93%;
+    }
+}
+
+@media screen and (max-width:380px) {
+
+    /* cart pop */
+    .cartcontainer {
+        width: 80vw;
+        height: 90vh;
+    }
+
+    .cartcontainer .head {
+        height: 4vh;
+    }
+
+
+    .cartcontainer .head h1 {
+        font-size: 3.8vw;
+        padding-left: 2vw;
+
+    }
+
+    .cartcontainer .head .closecart {
+        font-size: 4.5vw;
+    }
+
+    .isempty {
+        width: 50vw;
+        height: 20vh;
+        font-size: 5vw;
+    }
+
+    .isempty a {
+        font-size: 3.2vw;
+        gap: 2px;
+    }
+
+    .cartcontainer .allcarts .cartitem {
+        padding-top: 14px;
+        gap: 10px;
+
+    }
+
+    .cartcontainer .allcarts .cartitem .left img {
+        height: 15vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right {
+        gap: 2.5vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail {
+        gap: 2px;
+
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail h1 {
+        font-size: 3.6vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .detail small {
+        font-size: 2.8vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .otherremove .remove {
+        font-size: 3vw;
+    }
+
+    .cartcontainer .allcarts .cartitem .right .otherremove .pricing {
+        font-size: 3vw;
+    }
+
+    .totalncheckout {
+        height: 10vh;
+    }
+
+    .totalncheckout .totalpricing {
+        padding-left: 2.6vw;
+    }
+
+    .totalncheckout .totalpricing h1 {
+        font-size: 4vw;
+    }
+
+    .totalncheckout .totalpricing small {
+        font-size: 3.6vw;
+    }
+
+    .totalncheckout .checkoutpayment {
+        font-size: 3vw;
+        height: 6vh;
+    }
+}

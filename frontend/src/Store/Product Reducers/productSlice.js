@@ -15,15 +15,15 @@ export const getProducts = createAsyncThunk("product/getProducts", async ({ keyw
     page = page || 1;
     keyword = keyword || '';
     category = category ? category.toLowerCase() : '';
-    const { data } = await axios.get(`/api/ecommercev1/products?keyword=${keyword}&page=${page}&category=${category}&price[gte]=${loweramount}&price[lte]=${highamount}&ratings[gte]=${ratings}`);
+    const { data } = await axios.get(`/api/ecommerce/v1/products?keyword=${keyword}&page=${page}&category=${category}&price[gte]=${loweramount}&price[lte]=${highamount}&ratings[gte]=${ratings}`);
     return data;
 });
 export const getSingleProduct = createAsyncThunk("product/getSingleProduct", async (id) => {
-    const response = await axios.get(`/api/ecommercev1/products/${id}`);
+    const response = await axios.get(`/api/ecommerce/v1/products/${id}`);
     return response.data.product;
 });
 export const gettodayCategories = createAsyncThunk("product/gettodayCategories", async (category) => {
-    const response = await axios.get(`/api/ecommercev1/products?category=${category}`);
+    const response = await axios.get(`/api/ecommerce/v1/products?category=${category}`);
     return response.data.products;
 });
 

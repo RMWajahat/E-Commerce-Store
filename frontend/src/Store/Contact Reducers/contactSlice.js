@@ -13,7 +13,7 @@ let server_error = "";
 export const contactUs = createAsyncThunk('contactUs/contact', async (data) => {
     let response = null;
     try {
-        response = await axios.post('/api/ecommercev1/contact', data);
+        response = await axios.post('/api/ecommerce/v1/contact', data);
         return response.data;
     } catch (error) {
 

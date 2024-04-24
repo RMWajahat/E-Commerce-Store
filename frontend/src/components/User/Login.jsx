@@ -18,7 +18,11 @@ const Login = ({ currentUser, setCurrentUser }) => {
     const [password, setPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
 
-
+    useEffect(() => {
+        if (currentUser) {
+            navigate("/profile")
+        }
+    }, [currentUser])
 
     const handleSignUp = (e) => {
         e.preventDefault();

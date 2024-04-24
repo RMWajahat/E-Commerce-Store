@@ -15,12 +15,24 @@ import SectionHeading from '../Extras/SectionHeading';
 import ReviewCard from '../Extras/ReviewCard';
 import PageTitle from '../Extras/PageTitle';
 
+
+
+
 const ProductViewPage = () => {
 
     const { id } = useParams();
     const [cartCount, setCartCount] = useState(1);
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product.productDetails);
+
+    const addToCart = (product) => {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const existingProduct = cartItems.find((item) => item._id === product._id);
+        if (!existingProduct) {
+            cartItems.push({ ...product, qty: cartCount });
+        }
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
 
 
     useEffect(() => {
@@ -127,7 +139,7 @@ const ProductViewPage = () => {
                                 </span>
                             </button>
                             <div className="inline-block align-bottom">
-                                <button className="bg-yellow-300  w-11/12 m-auto text-nowrap opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold flex align-middle justify-center md:text-base text-sm">
+                                <button className="bg-yellow-300  w-11/12 m-auto text-nowrap opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold flex align-middle justify-center md:text-base text-sm" onClick={() => addToCart(product)}>
                                     <span>Add to Cart</span>
                                 </button>
 

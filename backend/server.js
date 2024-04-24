@@ -32,7 +32,7 @@ connectDatabase();    // yahan connectDatabase function ko call kia hai
 
 // cloudinary ko configure krna hai 
 cloudinary.config({
-    cloudname: process.env.CLOUDINARY_NAME,     // cloudinary ko configure krna hai    uss ka name hain
+    cloud_name: process.env.CLOUDINARY_NAME,     // cloudinary ko configure krna hai    uss ka name hain
     api_key: process.env.CLOUDINARY_API_KEY,            //  api_key and api_secret ko configure krna hai
     api_secret: process.env.CLOUDINARY_API_SECRET       // koi secret hai k koi bhi track nah krr ska secure krna ka lia 
 })

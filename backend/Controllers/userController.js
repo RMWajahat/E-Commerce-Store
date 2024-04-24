@@ -12,6 +12,7 @@ const cloudinary = require('cloudinary');
 
 const registerUser = catchAsyncErrors(
     async (req, res, next) => {
+
         let myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: "avatars",
             width: 150,
@@ -35,12 +36,8 @@ const registerUser = catchAsyncErrors(
             }, role, createdAt
         }
         );
-
         // console.log("User created successfully");
-
         sendTokenResponse(usernew, 201, "User Registered successfully", res);
-
-
     })
 
 

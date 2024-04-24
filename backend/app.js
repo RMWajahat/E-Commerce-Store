@@ -20,9 +20,6 @@ const contactRoutes = require("./Routes/ContactRoutes");
 
 const app = express();
 app.use(express.json());    // yani ka app express ka use kara ga or json ka use kara ga
-app.use(bodyParser.urlencoded({ extended: true }));    // body parser ka use kara ga or urlencoded ka use kara ga    extended: true ka mtlb hai ka koi bhi data jo a raha hai wo parse ho jae ga
-// aur use krna ki waja yeh hai k bodyparser hamein help kara ga in
-
 // initaializing usages 
 
 // cookie parser usage 
@@ -36,12 +33,19 @@ app.use(crossOriginSharing({
     credentials: true
 }));
 
+// body parser usage
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));    // body parser ka use kara ga or urlencoded ka use kara ga    extended: true ka mtlb hai ka koi bhi data jo a raha hai wo parse ho jae ga
+// aur use krna ki waja yeh hai k bodyparser hamein help kara ga in
+app.use(fileUpload({
+    limits: { fileSize: 4 * 1024 * 1024 },   // max 4MB allowed
+}));  // file upload ka use kara ga
 
 // -------------------------------------------------------      Yahan scene ye ha k saray routes unka name ka bna ka phir unko app.use ma use kara ga   iss tra code app.js ma kmm ho jae ga 
 // Now using product router in app.js     calling api
-app.use("/api/ecommercev1", productRoutesAll)
-app.use("/api/ecommercev1", orderRoutes)
-app.use("/api/ecommercev1", contactRoutes)
+app.use("/api/ecommerce/v1", productRoutesAll)
+app.use("/api/ecommerce/v1", orderRoutes)
+app.use("/api/ecommerce/v1", contactRoutes)
 app.use("/auth", user_routes)
 
 

@@ -7,6 +7,7 @@ import Loader from '../src/components/Extras/Loader';
 function App() {
   const [currentUser, setCurrentUser] = useState(localStorage.getItem('user'));
   const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);

@@ -22,10 +22,15 @@ export const LogOut = createAsyncThunk("user/logout", async () => {
 
 
 
-export const registerUser = createAsyncThunk("user/registerUser", async ({ name, email, password, avatar }) => {
+export const registerUser = createAsyncThunk("user/registerUser", async (userData) => {
     let response = null;
     try {
-        response = await axios.post('/auth/register', { name, email, password, avatar });
+        const userConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+        response = await axios.post('/auth/register', userData, userConfig);
         return response.data;
     } catch (error) {
         server_error = error.response.data.message;
