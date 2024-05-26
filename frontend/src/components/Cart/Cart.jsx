@@ -72,9 +72,11 @@ const Cart = (props) => {
                     <h1>Total: </h1>
                     <small>${total}</small>
                 </div>
-                <NavLink to={"payment"} style={{ backgroundColor: "black", color: "aliceblue" }} onClick={() => {
-                    props.setShowCart(false);
-                }} className="checkoutpayment">Checkout</NavLink>
+                {
+                    total > 0 ? <NavLink to={`/checkout/${total}`} style={{ backgroundColor: "black", color: "aliceblue" }} onClick={() => {
+                        props.setShowCart(false);
+                    }} className="checkoutpayment">Checkout</NavLink> : ""
+                }
             </div>
         </div>
     );

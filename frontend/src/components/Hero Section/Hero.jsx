@@ -25,7 +25,7 @@ const Hero = () => {
                             </p>
                             <div className="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
                                 <Link
-                                    to="/shop"
+                                    to="/products"
                                     title="Start buying"
                                     className="w-full py-3 px-6 text-center rounded-xl transition bg-gray-700 shadow-xl hover:bg-gray-600 active:bg-gray-700 focus:bg-gray-600 sm:w-max"
                                 >

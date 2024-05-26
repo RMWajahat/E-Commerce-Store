@@ -15,6 +15,8 @@ const user_routes = require("./Routes/userRoutes");
 const orderRoutes = require("./Routes/OrderRoutes");
 const contactRoutes = require("./Routes/ContactRoutes");
 
+const PaymentRoutes = require('./Routes/PaymentRoutes');
+
 
 
 
@@ -47,6 +49,7 @@ app.use("/api/ecommerce/v1", productRoutesAll)
 app.use("/api/ecommerce/v1", orderRoutes)
 app.use("/api/ecommerce/v1", contactRoutes)
 app.use("/auth", user_routes)
+app.use("/api/ecommerce/v1", PaymentRoutes);
 
 
 
